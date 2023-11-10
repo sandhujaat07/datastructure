@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        /* Add CSS styles for code formatting and page layout */
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="content">
+        <h1>SORTING ALGORITHMS</h1>
+        <section id="">
+            <h2>1. Enter a Integer Array From the User and Perform Selection
+                 Sort Algorithm Through Iteration. Also Calculate the Worst and Best Complexity With Exact Time.</h2>
+            <pre><code>
+                #include 
+                    
+                    
+                void selectionSort(int arr[], int n) {
+                    for (int i = 0; i < n - 1; i++) {
+                        int min_index = i;
+                        for (int j = i + 1; j < n; j++) {
+                            if (arr[j] < arr[min_index]) {
+                                min_index = j;
+                            }
+                        }
+                        if (min_index != i) {
+                            int temp = arr[i];
+                            arr[i] = arr[min_index];
+                            arr[min_index] = temp;
+                        }
+                    }
+                }
+                
+                int main() {
+                    int n;
+                
+                    printf("Enter the size of the array: ");
+                    scanf("%d", &n);
+                
+                    int arr[n];
+                
+                    printf("Enter %d elements into the array: ", n);
+                    for (int i = 0; i < n; i++) {
+                        scanf("%d", &arr[i]);
+                    }
+                
+                    clock_t start, end;
+                    double cpu_time_used;
+                
+                    start = clock(); // Start the timer
+                
+                    selectionSort(arr, n); // Perform selection sort on the array
+                
+                    end = clock(); // End the timer
+                
+                    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+                
+                    printf("Sorted array: ");
+                    for (int i = 0; i < n; i++) {
+                        printf("%d ", arr[i]);
+                    }
+                    printf("\n");
+                
+                    printf("Time taken: %f seconds\n", cpu_time_used);
+                
+                    printf("Best case complexity: O(n^2)\n");
+                    printf("Worst case complexity: O(n^2)\n");
+                
+                    return 0;
+                }
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the size of the array: 5
+                Enter 5 elements into the array: 5 7 8 9 10
+                Sorted array: 5 7 8 9 10 
+                Time taken: 0.000001 seconds
+                Best case complexity: O(n^2)
+                Worst case complexity: O(n^2)
+                
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>2. Enter a Integer Array From the User and Perform Selection Sort Algorithm Through Recursion. Also Calculate the Worst and Best Complexity With Exact Time.
+            </h2>
+            <pre><code>
+                #include 
+                    
+                   
+                void selectionSortRecursive(int arr[], int n, int index) {
+                    if (index >= n - 1) {
+                        return;
+                    }
+                
+                    int min_index = index;
+                    for (int j = index + 1; j < n; j++) {
+                        if (arr[j] < arr[min_index]) {
+                            min_index = j;
+                        }
+                    }
+                    if (min_index != index) {
+                        int temp = arr[index];
+                        arr[index] = arr[min_index];
+                        arr[min_index] = temp;
+                    }
+                
+                    selectionSortRecursive(arr, n, index + 1);
+                }
+                
+                int main() {
+                    int n;
+                
+                    printf("Enter the size of the array: ");
+                    scanf("%d", &n);
+                
+                    int arr[n];
+                
+                    printf("Enter %d elements into the array: ", n);
+                    for (int i = 0; i < n; i++) {
+                        scanf("%d", &arr[i]);
+                    }
+                
+                    clock_t start, end;
+                    double cpu_time_used;
+                
+                    start = clock(); // Start the timer
+                
+                    selectionSortRecursive(arr, n, 0); // Perform selection sort using recursion
+                
+                    end = clock(); // End the timer
+                
+                    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+                
+                    printf("Sorted array: ");
+                    for (int i = 0; i < n; i++) {
+                        printf("%d ", arr[i]);
+                    }
+                    printf("\n");
+                
+                    printf("Time taken: %f seconds\n", cpu_time_used);
+                
+                    printf("Best case complexity: O(n^2)\n");
+                    printf("Worst case complexity: O(n^2)\n");
+                
+                    return 0;
+                }
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the size of the array: 4
+                Enter 4 elements into the array: 7 8 9 5
+                Sorted array: 5 7 8 9 
+                Time taken: 0.000002 seconds
+                Best case complexity: O(n^2)
+                Worst case complexity: O(n^2)
+                
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>3. Enter a Integer Array From the User and Perform
+                 Bubble Sort Algorithm Through Iteration. Also Calculate the Worst and Best Complexity With Exact Time</h2>
+            <pre><code>
+                #include 
+                    
+                   
+                void bubbleSort(int arr[], int n) {
+                    for (int i = 0; i < n - 1; i++) {
+                        int swapped = 0; // Variable to track if any swap occurred in the current pass
+                        for (int j = 0; j < n - i - 1; j++) {
+                            if (arr[j] > arr[j + 1]) {
+                                // Swap if the current element is greater than the next element
+                                int temp = arr[j];
+                                arr[j] = arr[j + 1];
+                                arr[j + 1] = temp;
+                                swapped = 1;
+                            }
+                        }
+                        if (swapped == 0) {
+                            // If no swap occurred in a pass, the array is already sorted
+                            break;
+                        }
+                    }
+                }
+                
+                int main() {
+                    int n;
+                
+                    printf("Enter the size of the array: ");
+                    scanf("%d", &n);
+                
+                    int arr[n];
+                
+                    printf("Enter %d elements into the array: ", n);
+                    for (int i = 0; i < n; i++) {
+                        scanf("%d", &arr[i]);
+                    }
+                
+                    clock_t start, end;
+                    double cpu_time_used;
+                
+                    start = clock(); // Start the timer
+                
+                    bubbleSort(arr, n); // Perform bubble sort on the array
+                
+                    end = clock(); // End the timer
+                
+                    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+                
+                    printf("Sorted array: ");
+                    for (int i = 0; i < n; i++) {
+                        printf("%d ", arr[i]);
+                    }
+                    printf("\n");
+                
+                    printf("Time taken: %f seconds\n", cpu_time_used);
+                
+                    printf("Best case complexity: O(n)\n");
+                    printf("Worst case complexity: O(n^2)\n");
+                
+                    return 0;}
+
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the size of the array: 5
+                Enter 5 elements into the array: 22 55 33 11 44
+                Sorted array: 11 22 33 44 55 
+                Time taken: 0.000002 seconds
+                Best case complexity: O(n)
+                Worst case complexity: O(n^2)
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>14. Length of the longest valid substring
+
+                Explanation -
+                
+                Given a string consisting of opening and closing parenthesis, find the length of the longest valid parenthesis substring. Examples: Input : ((() Output : 2 Explanation : () 
+                Input: )()()) Output : 4 Explanation: ()() Input: ()(())))) Output: 6 Explanation: ()(()) with eg output</h2>
+            <pre><code>
+                def longestValidParentheses(s):
+                stack = [-1]
+                max_length = 0
+            
+                for i in range(len(s)):
+                    if s[i] == '(':
+                        stack.append(i)
+                    else:
+                        stack.pop()
+                        if not stack:
+                            stack.append(i)
+                        else:
+                            max_length = max(max_length, i - stack[-1])
+            
+                return max_length
+            
+            # Example usage:
+            example1 = "((()"
+            example2 = ")()())"
+            example3 = "()(()))))"
+            
+            output1 = longestValidParentheses(example1)
+            output2 = longestValidParentheses(example2)
+            output3 = longestValidParentheses(example3)
+            
+            print(f"Input: {example1}, Output: {output1}")
+            print(f"Input: {example2}, Output: {output2}")
+            print(f"Input: {example3}, Output: {output3}")
+            
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Input: (((), Output: 2
+                Input: )()()), Output: 4
+                Input: ()(())))), Output: 6
+                
+            </code></pre>
+        </section>
+        <section id="5">
+            <h2>5. Enter a Integer Array From the User and Perform
+                 Insertion Sort Algorithm Through Iteration. Also Calculate the Worst and Best Complexity With Exact Time.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <time.h>
+                    
+                    void insertionSort(int arr[], int n) {
+                        int i, key, j;
+                        for (i = 1; i < n; i++) {
+                            key = arr[i];
+                            j = i - 1;
+                    
+                            while (j >= 0 && arr[j] > key) {
+                                arr[j + 1] = arr[j];
+                                j = j - 1;
+                            }
+                            arr[j + 1] = key;
+                        }
+                    }
+                    
+                    int main() {
+                        int n;
+                        printf("Enter the number of elements in the array: ");
+                        scanf("%d", &n);
+                    
+                        int arr[n];
+                    
+                        printf("Enter %d elements:\n", n);
+                        for (int i = 0; i < n; i++) {
+                            scanf("%d", &arr[i]);
+                        }
+                    
+                        clock_t t;
+                        t = clock();
+                    
+                        insertionSort(arr, n);
+                    
+                        t = clock() - t;
+                    
+                        double time_taken = ((double)t) / CLOCKS_PER_SEC;
+                    
+                        printf("Sorted array in ascending order: ");
+                        for (int i = 0; i < n; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                        printf("\n");
+                    
+                        printf("Time taken: %f seconds\n", time_taken);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of elements in the array: 3
+                Enter 3 elements:
+                22
+                33
+                44
+                Sorted array in ascending order: 22 33 44 
+                Time taken: 0.000001 seconds
+                
+            </code></pre>
+        </section>
+        <section id="6">
+            <h2>6. Enter a Integer Array From the User and
+                 Perform Insertion Sort Algorithm Through Recursion. Also Calculate the Worst and Best Complexity With Exact Time.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <time.h>
+                    
+                    // Recursive function to insert an element into a sorted array
+                    void insertSorted(int arr[], int n) {
+                        if (n <= 1)
+                            return;
+                    
+                        insertSorted(arr, n - 1);
+                    
+                        int key = arr[n - 1];
+                        int j = n - 2;
+                    
+                        while (j >= 0 && arr[j] > key) {
+                            arr[j + 1] = arr[j];
+                            j--;
+                        }
+                        arr[j + 1] = key;
+                    }
+                    void insertionSortRecursive(int arr[], int n) {
+                        if (n <= 1)
+                            return;
+                    
+                        insertionSortRecursive(arr, n - 1);
+                        insertSorted(arr, n);
+                    }
+                    
+                    int main() {
+                        int n;
+                        printf("Enter the number of elements in the array: ");
+                        scanf("%d", &n);
+                    
+                        int arr[n];
+                    
+                        printf("Enter %d elements:\n", n);
+                        for (int i = 0; i < n; i++) {
+                            scanf("%d", &arr[i]);
+                        }
+                    
+                        clock_t t;
+                        t = clock();
+                    
+                        insertionSortRecursive(arr, n);
+                    
+                        t = clock() - t;
+                    
+                        double time_taken = ((double)t) / CLOCKS_PER_SEC;
+                    
+                        printf("Sorted array in ascending order: ");
+                        for (int i = 0; i < n; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                        printf("\n");
+                    
+                        printf("Time taken: %f seconds\n", time_taken);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of elements in the array: 4
+                Enter 4 elements:
+                1
+                2
+                3
+                4
+                Sorted array in ascending order: 1 2 3 4 
+                Time taken: 0.000001 seconds
+                
+            </code></pre>
+        </section>
+        <section id="7">
+            <h2>7. Enter a Integer Array From the User and Perform
+                 Merge Sort Algorithm Through Iteration. Also Calculate the Worst and Best Complexity With Exact Time.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <time.h>
+                    
+                    void merge(int arr[], int l, int m, int r) {
+                        int i, j, k;
+                        int n1 = m - l + 1;
+                        int n2 = r - m;
+                    
+                        int L[n1], R[n2];
+                    
+                        for (i = 0; i < n1; i++)
+                            L[i] = arr[l + i];
+                        for (j = 0; j < n2; j++)
+                            R[j] = arr[m + 1 + j];
+                    
+                        i = 0;
+                        j = 0;
+                        k = l;
+                    
+                        while (i < n1 && j < n2) {
+                            if (L[i] <= R[j]) {
+                                arr[k] = L[i];
+                                i++;
+                            } else {
+                                arr[k] = R[j];
+                                j++;
+                            }
+                            k++;
+                        }
+                    
+                        while (i < n1) {
+                            arr[k] = L[i];
+                            i++;
+                            k++;
+                        }
+                    
+                        while (j < n2) {
+                            arr[k] = R[j];
+                            j++;
+                            k++;
+                        }
+                    }
+                    
+                    void mergeSort(int arr[], int n) {
+                        int curr_size;
+                        int left_start;
+                    
+                        for (curr_size = 1; curr_size <= n - 1; curr_size = 2 * curr_size) {
+                            for (left_start = 0; left_start < n - 1; left_start += 2 * curr_size) {
+                                int mid = left_start + curr_size - 1;
+                                int right_end = ((left_start + 2 * curr_size - 1) < (n - 1)) ? (left_start + 2 * curr_size - 1) : (n - 1);
+                                merge(arr, left_start, mid, right_end);
+                            }
+                        }
+                    }
+                    
+                    int main() {
+                        int n;
+                        printf("Enter the number of elements in the array: ");
+                        scanf("%d", &n);
+                    
+                        int arr[n];
+                    
+                        printf("Enter %d elements:\n", n);
+                        for (int i = 0; i < n; i++) {
+                            scanf("%d", &arr[i]);
+                        }
+                    
+                        clock_t t;
+                        t = clock();
+                    
+                        mergeSort(arr, n);
+                    
+                        t = clock() - t;
+                    
+                        double time_taken = ((double)t) / CLOCKS_PER_SEC;
+                    
+                        printf("Sorted array in ascending order: ");
+                        for (int i = 0; i < n; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                        printf("\n");
+                    
+                        printf("Time taken: %f seconds\n", time_taken);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of elements in the array: 4
+                Enter 4 elements:
+                3
+                4
+                5
+                6
+                Sorted array in ascending order: 3 4 5 6 
+                Time taken: 0.000002 seconds
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>8. ENTER A INTEGER ARRAY FROM THE USER AND PERFORM MERGE 
+                SORT ALGORITHM THROUGH RECURSION. ALSO CALCULATE THE WORST AND BEST COMPLEXITY WITH EXACT TIME.</h2>
+            <pre><code>
+
+                #include<stdio.h>
+                    #define N 20
+                    #include<time.h>
+                   void sort(int arr[],int low,int mid,int high);
+                    
+                   void merge(int arr[],int low,int high)
+                   {
+                       int mid;
+                       if(low<high)
+                       {
+                           mid=(low+high)/2;
+                           merge(arr,low,mid);
+                           merge(arr,mid+1,high);
+                           sort(arr,low,mid,high);
+                       }
+                   }
+                   
+                   void sort(int arr[],int low,int mid,int high)
+                   {
+                       int m,s=low,t=high;
+                       
+                       int temp[N]; 
+                       int i=low;
+                       int k=low;
+                       m=mid+1;
+                       while(low<=mid && m<=high)
+                       {
+                           if(arr[low]<=arr[m])
+                           {
+                               temp[i]=arr[low];
+                               low++;
+                               i++;
+                           }
+                           else
+                           {
+                               temp[i]=arr[m];
+                               m++;
+                               i++;
+                           }
+                           
+                       }
+                       
+                       while(low<=mid)
+                       {
+                           temp[i]=arr[low];
+                           i++;
+                           low++;
+                       }
+                       
+                   while(m<=high)
+                       {
+                           temp[i]=arr[m];
+                           i++;
+                           m++;
+                       }
+                       
+                       for(k=s;k<=t;k++)
+                       arr[k]=temp[k];
+                   }
+                   
+                   
+                   void main()
+                   {
+                   int arr[N],i,len;
+                   
+                   printf("\nenter length of array\n");
+                   scanf("%d",&len);
+                   printf("\nenter %d numbers for array\n",len);
+                   for(i=0;i<len;i++)
+                   {
+                       scanf("%d",&arr[i]);
+                   }
+                   printf("\narray is:\n");
+                   for(i=0;i<len;i++)
+                   {
+                       printf("%d\t",arr[i]);
+                   }
+                   clock_t start_time = clock();
+                   merge(arr,0,len-1);
+                   clock_t end_time = clock();
+                   printf("\nthe sorted array is\n");
+                   for(i=0;i<len;i++)
+                   {
+                       printf("%d\t",arr[i]);
+                   }
+                    
+                   double exec_time = (double)(end_time-start_time)/CLOCKS_PER_SEC;
+                   printf("\nexecution time = %f",exec_time);
+                   }
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                enter length of array
+                4
+                enter 4 numbers for array
+                43
+                53
+                87
+                665
+                array is:
+                43	53	87	665	
+                the sorted array is
+                43	53	87	665	
+                execution time = 0.000002
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>9. ENTER A INTEGER ARRAY FROM THE USER AND PERFORM
+                 QUICK SORT ALGORITHM THROUGH ITERATION. ALSO CALCULATE THE WORST AND BEST COMPLEXITY WITH EXACT TIME.</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    // Function to swap two elements
+                    void swap(int* a, int* b) {
+                        int t = *a;
+                        *a = *b;
+                        *b = t;
+                    }
+                    
+                    // Function to partition the array and return the pivot index
+                    int partition(int arr[], int low, int high) {
+                        int pivot = arr[high];
+                        int i = (low - 1);
+                    
+                        for (int j = low; j <= high - 1; j++) {
+                            if (arr[j] <= pivot) {
+                                i++;
+                                swap(&arr[i], &arr[j]);
+                            }
+                        }
+                        swap(&arr[i + 1], &arr[high]);
+                        return (i + 1);
+                    }
+                    
+                    // Function to perform quicksort using iteration
+                    void quickSort(int arr[], int low, int high) {
+                        int stack[high - low + 1];
+                        int top = -1;
+                    
+                        stack[++top] = low;
+                        stack[++top] = high;
+                    
+                        while (top >= 0) {
+                            high = stack[top--];
+                            low = stack[top--];
+                    
+                            int pi = partition(arr, low, high);
+                    
+                            if (pi - 1 > low) {
+                                stack[++top] = low;
+                                stack[++top] = pi - 1;
+                            }
+                    
+                            if (pi + 1 < high) {
+                                stack[++top] = pi + 1;
+                                stack[++top] = high;
+                            }
+                        }
+                    }
+                    
+                    // Function to print an array
+                    void printArray(int arr[], int size) {
+                        for (int i = 0; i < size; i++)
+                            printf("%d ", arr[i]);
+                        printf("\n");
+                    }
+                    
+                    int main() {
+                        int n;
+                    
+                        // Get the number of elements in the array
+                        printf("Enter the number of elements in the array: ");
+                        scanf("%d", &n);
+                    
+                        int arr[n];
+                    
+                        // Get the elements of the array
+                        printf("Enter the elements of the array:\n");
+                        for (int i = 0; i < n; i++) {
+                            scanf("%d", &arr[i]);
+                        }
+                    
+                        // Perform quicksort
+                        clock_t start, end;
+                        double cpu_time_used;
+                    
+                        start = clock();
+                        quickSort(arr, 0, n - 1);
+                        end = clock();
+                    
+                        cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+                    
+                        // Print the sorted array
+                        printf("Sorted array: \n");
+                        printArray(arr, n);
+                    
+                        // Print the time taken
+                        printf("Time taken: %f seconds\n", cpu_time_used);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of elements in the array: 5
+                Enter the elements of the array:
+                12 7 9 5 3
+                Sorted array: 
+                3 5 7 9 12
+                Time taken: 0.000001 seconds
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>10. ENTER A INTEGER ARRAY FROM THE USER AND PERFORM
+                 QUICK SORT ALGORITHM THROUGH RECURSION. ALSO CALCULATE THE WORST AND BEST COMPLEXITY WITH EXACT TIME.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <time.h>
+                    
+                    // Function to swap two elements
+                    void swap(int* a, int* b) {
+                        int t = *a;
+                        *a = *b;
+                        *b = t;
+                    }
+                    
+                    // Function to partition the array and return the pivot index
+                    int partition(int arr[], int low, int high) {
+                        int pivot = arr[high];
+                        int i = (low - 1);
+                    
+                        for (int j = low; j <= high - 1; j++) {
+                            if (arr[j] <= pivot) {
+                                i++;
+                                swap(&arr[i], &arr[j]);
+                            }
+                        }
+                        swap(&arr[i + 1], &arr[high]);
+                        return (i + 1);
+                    }
+                    
+                    // Function to perform quicksort using recursion
+                    void quickSort(int arr[], int low, int high) {
+                        if (low < high) {
+                            int pi = partition(arr, low, high);
+                    
+                            quickSort(arr, low, pi - 1);
+                            quickSort(arr, pi + 1, high);
+                        }
+                    }
+                    
+                    // Function to print an array
+                    void printArray(int arr[], int size) {
+                        for (int i = 0; i < size; i++)
+                            printf("%d ", arr[i]);
+                        printf("\n");
+                    }
+                    
+                    int main() {
+                        int n;
+                    
+                        // Get the number of elements in the array
+                        printf("Enter the number of elements in the array: ");
+                        scanf("%d", &n);
+                    
+                        int arr[n];
+                    
+                        // Get the elements of the array
+                        printf("Enter the elements of the array:\n");
+                        for (int i = 0; i < n; i++) {
+                            scanf("%d", &arr[i]);
+                        }
+                    
+                        // Perform quicksort
+                        clock_t start, end;
+                        double cpu_time_used;
+                    
+                        start = clock();
+                        quickSort(arr, 0, n - 1);
+                        end = clock();
+                    
+                        cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+                    
+                        // Print the sorted array
+                        printf("Sorted array: \n");
+                        printArray(arr, n);
+                    
+                        // Print the time taken
+                        printf("Time taken: %f seconds\n", cpu_time_used);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Sorted array: 
+                3 5 7 9 12
+                Time taken: 0.000001 seconds
+                
+            </code></pre>
+        </section>
+        <section id="11">
+            <h2>11. Enter a String Array From the User and Perform Selection Sort Algorithm Through
+                 Iteration. Also Calculate the Worst and Best Complexity With Exact Time.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <string.h>
+                    #include <time.h>
+                    
+                    void selectionSort(char arr[][100], int n) {
+                        int i, j, min_idx;
+                        char temp[100];
+                    
+                        for (i = 0; i < n - 1; i++) {
+                            min_idx = i;
+                    
+                            for (j = i + 1; j < n; j++) {
+                                if (strcmp(arr[j], arr[min_idx]) < 0) {
+                                    min_idx = j;
+                                }
+                            }
+                    
+                            if (min_idx != i) {
+                                strcpy(temp, arr[i]);
+                                strcpy(arr[i], arr[min_idx]);
+                                strcpy(arr[min_idx], temp);
+                            }
+                        }
+                    }
+                    
+                    int main() {
+                        int n;
+                        printf("Enter the number of strings in the array: ");
+                        scanf("%d", &n);
+                    
+                        char arr[n][100];
+                    
+                        printf("Enter %d strings:\n", n);
+                        for (int i = 0; i < n; i++) {
+                            scanf("%s", arr[i]);
+                        }
+                    
+                        clock_t t;
+                        t = clock();
+                    
+                        selectionSort(arr, n);
+                    
+                        t = clock() - t;
+                    
+                        double time_taken = ((double)t) / CLOCKS_PER_SEC;
+                    
+                        printf("Sorted array in lexicographical order: ");
+                        for (int i = 0; i < n; i++) {
+                            printf("%s ", arr[i]);
+                        }
+                        printf("\n");
+                    
+                        printf("Time taken: %f seconds\n", time_taken);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of strings in the array: 5
+                Enter 5 strings:
+                9
+                8
+                7
+                6
+                5
+                Sorted array in lexicographical order: 5 6 7 8 9 
+                Time taken: 0.000004 seconds
+                
+            </code></pre>
+        </section>
+        <section id="12">
+            <h2>12.  Enter a String Array From the User and Perform Selection Sort
+                 Algorithm Through Recursion. Also Calculate the Worst and Best Complexity With Exact Time.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <string.h>
+                    #include <time.h>
+                    
+                    void swap(char *str1, char *str2) {
+                        char temp[100];
+                        strcpy(temp, str1);
+                        strcpy(str1, str2);
+                        strcpy(str2, temp);
+                    }
+                    
+                    void recursiveSelectionSort(char arr[][100], int n, int index) {
+                        if (index >= n - 1)
+                            return;
+                    
+                        int min_idx = index;
+                        for (int j = index + 1; j < n; j++) {
+                            if (strcmp(arr[j], arr[min_idx]) < 0) {
+                                min_idx = j;
+                            }
+                        }
+                    
+                        if (min_idx != index) {
+                            swap(arr[min_idx], arr[index]);
+                        }
+                    
+                        recursiveSelectionSort(arr, n, index + 1);
+                    }
+                    
+                    int main() {
+                        int n;
+                        printf("Enter the number of strings in the array: ");
+                        scanf("%d", &n);
+                    
+                        char arr[n][100];
+                    
+                        printf("Enter %d strings:\n", n);
+                        for (int i = 0; i < n; i++) {
+                            scanf("%s", arr[i]);
+                        }
+                    
+                        clock_t t;
+                        t = clock();
+                    
+                        recursiveSelectionSort(arr, n, 0);
+                    
+                        t = clock() - t;
+                    
+                        double time_taken = ((double)t) / CLOCKS_PER_SEC;
+                    
+                        printf("Sorted array in lexicographical order: ");
+                        for (int i = 0; i < n; i++) {
+                            printf("%s ", arr[i]);
+                        }
+                        printf("\n");
+                    
+                        printf("Time taken: %f seconds\n", time_taken);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of strings in the array: 3
+                Enter 3 strings:
+                99
+                88
+                77
+                Sorted array in lexicographical order: 77 88 99 
+                Time taken: 0.000004 seconds
+                
+            </code></pre>
+        </section>
+        <section id="13">
+            <h2>13. Enter a String Array From the User and Perform Bubble 
+                Sort Algorithm Through Iteration. Also Calculate the Worst and Best Complexity With Exact Time.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <string.h>
+                    #include <time.h>
+                    
+                    void swap(char *str1, char *str2) {
+                        char temp[100];
+                        strcpy(temp, str1);
+                        strcpy(str1, str2);
+                        strcpy(str2, temp);
+                    }
+                    
+                    void bubbleSort(char arr[][100], int n) {
+                        for (int i = 0; i < n - 1; i++) {
+                            for (int j = 0; j < n - i - 1; j++) {
+                                if (strcmp(arr[j], arr[j + 1]) > 0) {
+                                    swap(arr[j], arr[j + 1]);
+                                }
+                            }
+                        }
+                    }
+                    
+                    int main() {
+                        int n;
+                        printf("Enter the number of strings in the array: ");
+                        scanf("%d", &n);
+                    
+                        char arr[n][100];
+                    
+                        printf("Enter %d strings:\n", n);
+                        for (int i = 0; i < n; i++) {
+                            scanf("%s", arr[i]);
+                        }
+                    
+                        clock_t t;
+                        t = clock();
+                    
+                        bubbleSort(arr, n);
+                    
+                        t = clock() - t;
+                    
+                        double time_taken = ((double)t) / CLOCKS_PER_SEC;
+                    
+                        printf("Sorted array in lexicographical order: ");
+                        for (int i = 0; i < n; i++) {
+                            printf("%s ", arr[i]);
+                        }
+                        printf("\n");
+                    
+                        printf("Time taken: %f seconds\n", time_taken);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of strings in the array: 5
+                Enter 5 strings:
+                10
+                20
+                30
+                40
+                50
+                Sorted array in lexicographical order: 10 20 30 40 50 
+                Time taken: 0.000004 seconds
+                
+            </code></pre>
+        </section>
+        <section id="14">
+            <h2>14.  Enter a String Array From the User and Perform Bubble Sort Algorithm
+                 Through Recursion. Also Calculate the Worst and Best Complexity With Exact Time.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <string.h>
+                    #include <time.h>
+                    
+                    void swap(char *str1, char *str2) {
+                        char temp[100];
+                        strcpy(temp, str1);
+                        strcpy(str1, str2);
+                        strcpy(str2, temp);
+                    }
+                    
+                    void recursiveBubbleSort(char arr[][100], int n) {
+                        if (n == 1)
+                            return;
+                    
+                        for (int i = 0; i < n - 1; i++) {
+                            if (strcmp(arr[i], arr[i + 1]) > 0) {
+                                swap(arr[i], arr[i + 1]);
+                            }
+                        }
+                    
+                        recursiveBubbleSort(arr, n - 1);
+                    }
+                    
+                    int main() {
+                        int n;
+                        printf("Enter the number of strings in the array: ");
+                        scanf("%d", &n);
+                    
+                        char arr[n][100];
+                    
+                        printf("Enter %d strings:\n", n);
+                        for (int i = 0; i < n; i++) {
+                            scanf("%s", arr[i]);
+                        }
+                    
+                        clock_t t;
+                        t = clock();
+                    
+                        recursiveBubbleSort(arr, n);
+                    
+                        t = clock() - t;
+                    
+                        double time_taken = ((double)t) / CLOCKS_PER_SEC;
+                    
+                        printf("Sorted array in lexicographical order: ");
+                        for (int i = 0; i < n; i++) {
+                            printf("%s ", arr[i]);
+                        }
+                        printf("\n");
+                    
+                        printf("Time taken: %f seconds\n", time_taken);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of strings in the array: 4
+                Enter 4 strings:
+                2
+                5
+                6
+                4
+                Sorted array in lexicographical order: 2 4 5 6 
+                Time taken: 0.000006 seconds
+                
+            </code></pre>
+        </section>
+        <section id="15">
+            <h2>15. Enter a String Array From the User and Perform Insertion 
+                Sort Algorithm Through Iteration. Also Calculate the Worst and Best Complexity With Exact Time.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <string.h>
+                    #include <time.h>
+                    
+                    void insertionSort(char arr[][100], int n) {
+                        int i, j;
+                        char key[100];
+                    
+                        for (i = 1; i < n; i++) {
+                            strcpy(key, arr[i]);
+                            j = i - 1;
+                    
+                            while (j >= 0 && strcmp(arr[j], key) > 0) {
+                                strcpy(arr[j + 1], arr[j]);
+                                j = j - 1;
+                            }
+                            strcpy(arr[j + 1], key);
+                        }
+                    }
+                    
+                    int main() {
+                        int n;
+                        printf("Enter the number of strings in the array: ");
+                        scanf("%d", &n);
+                    
+                        char arr[n][100];
+                    
+                        printf("Enter %d strings:\n", n);
+                        for (int i = 0; i < n; i++) {
+                            scanf("%s", arr[i]);
+                        }
+                    
+                        clock_t t;
+                        t = clock();
+                    
+                        insertionSort(arr, n);
+                    
+                        t = clock() - t;
+                    
+                        double time_taken = ((double)t) / CLOCKS_PER_SEC;
+                    
+                        printf("Sorted array in lexicographical order: ");
+                        for (int i = 0; i < n; i++) {
+                            printf("%s ", arr[i]);
+                        }
+                        printf("\n");
+                    
+                        printf("Time taken: %f seconds\n", time_taken);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of strings in the array: 4
+                Enter 4 strings:
+                dog
+                bat
+                hen
+                pig
+                Sorted array in lexicographical order: bat dog hen pig 
+                Time taken: 0.000007 seconds
+            </code></pre>
+        </section>
+        <section id="16">
+            <h2>16. Enter a String Array From the User and Perform Insertion 
+                Sort Algorithm Through Iteration. Also Calculate the Worst and Best Complexity With Exact Time.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <string.h>
+                    #include <time.h>
+                    
+                    void insertionSort(char arr[][100], int n) {
+                        int i, j;
+                        char key[100];
+                    
+                        for (i = 1; i < n; i++) {
+                            strcpy(key, arr[i]);
+                            j = i - 1;
+                    
+                            while (j >= 0 && strcmp(arr[j], key) > 0) {
+                                strcpy(arr[j + 1], arr[j]);
+                                j = j - 1;
+                            }
+                            strcpy(arr[j + 1], key);
+                        }
+                    }
+                    
+                    int main() {
+                        int n;
+                        printf("Enter the number of strings in the array: ");
+                        scanf("%d", &n);
+                    
+                        char arr[n][100];
+                    
+                        printf("Enter %d strings:\n", n);
+                        for (int i = 0; i < n; i++) {
+                            scanf("%s", arr[i]);
+                        }
+                    
+                        clock_t t;
+                        t = clock();
+                    
+                        insertionSort(arr, n);
+                    
+                        t = clock() - t;
+                    
+                        double time_taken = ((double)t) / CLOCKS_PER_SEC;
+                    
+                        printf("Sorted array: ");
+                        for (int i = 0; i < n; i++) {
+                            printf("%s ", arr[i]);
+                        }
+                        printf("\n");
+                    
+                        printf("Time taken: %f seconds\n", time_taken);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of strings in the array: 4
+                Enter 4 strings:
+                h
+                f
+                w
+                j
+                Sorted array: f h j w 
+                Time taken: 0.000007 seconds
+                
+            </code></pre>
+        </section>
+        <section id="17">
+            <h2>17. Enter a String Array From the User and 
+                Perform Merge Sort Algorithm Through Iteration. Also Calculate the Worst and Best Complexity With Exact Time.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <string.h>
+                    
+                    void merge(char arr[][100], int l, int m, int r) {
+                        int i, j, k;
+                        int n1 = m - l + 1;
+                        int n2 = r - m;
+                    
+                        char L[n1][100], R[n2][100];
+                    
+                        for (i = 0; i < n1; i++)
+                            strcpy(L[i], arr[l + i]);
+                    
+                        for (j = 0; j < n2; j++)
+                            strcpy(R[j], arr[m + 1 + j]);
+                    
+                        i = 0;
+                        j = 0;
+                        k = l;
+                    
+                        while (i < n1 && j < n2) {
+                            if (strcmp(L[i], R[j]) <= 0) {
+                                strcpy(arr[k], L[i]);
+                                i++;
+                            } else {
+                                strcpy(arr[k], R[j]);
+                                j++;
+                            }
+                            k++;
+                        }
+                    
+                        while (i < n1) {
+                            strcpy(arr[k], L[i]);
+                            i++;
+                            k++;
+                        }
+                    
+                        while (j < n2) {
+                            strcpy(arr[k], R[j]);
+                            j++;
+                            k++;
+                        }
+                    }
+                    
+                    void iterativeMergeSort(char arr[][100], int n) {
+                        int curr_size;
+                        int left_start;
+                    
+                        for (curr_size = 1; curr_size <= n - 1; curr_size = 2 * curr_size) {
+                            for (left_start = 0; left_start < n - 1; left_start += 2 * curr_size) {
+                                int mid = left_start + curr_size - 1;
+                                int right_end = left_start + 2 * curr_size - 1;
+                                if (right_end > n - 1)
+                                    right_end = n - 1;
+                    
+                                merge(arr, left_start, mid, right_end);
+                            }
+                        }
+                    }
+                    
+                    void printArray(char arr[][100], int n) {
+                        for (int i = 0; i < n; i++) {
+                            printf("%s ", arr[i]);
+                        }
+                        printf("\n");
+                    }
+                    
+                    int main() {
+                        int n;
+                        printf("Enter the number of elements in the array: ");
+                        scanf("%d", &n);
+                    
+                        char arr[n][100];
+                        printf("Enter elements of the string array: ");
+                        for (int i = 0; i < n; i++) {
+                            scanf("%s", arr[i]);
+                        }
+                    
+                        printf("Unsorted Array: ");
+                        printArray(arr, n);
+                    
+                        iterativeMergeSort(arr, n);
+                    
+                        printf("Sorted Array: ");
+                        printArray(arr, n);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of elements in the array: 4
+                Enter elements of the string array: d
+                c
+                b
+                a
+                Unsorted Array: d c b a 
+                Sorted Array: a b c d 
+            </code></pre>
+        </section>
+        <section id="18">
+            <h2>18. Enter a String Array From the User and Perform 
+                Merge Sort Algorithm Through Recursion. Also Calculate the Worst and Best Complexity With Exact Time.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <string.h>
+                    #include <time.h>
+                    
+                    void merge(char arr[][100], int l, int m, int r) {
+                        int i, j, k;
+                        int n1 = m - l + 1;
+                        int n2 = r - m;
+                    
+                        char L[n1][100], R[n2][100];
+                    
+                        for (i = 0; i < n1; i++)
+                            strcpy(L[i], arr[l + i]);
+                    
+                        for (j = 0; j < n2; j++)
+                            strcpy(R[j], arr[m + 1 + j]);
+                    
+                        i = 0;
+                        j = 0;
+                        k = l;
+                    
+                        while (i < n1 && j < n2) {
+                            if (strcmp(L[i], R[j]) <= 0) {
+                                strcpy(arr[k], L[i]);
+                                i++;
+                            } else {
+                                strcpy(arr[k], R[j]);
+                                j++;
+                            }
+                            k++;
+                        }
+                    
+                        while (i < n1) {
+                            strcpy(arr[k], L[i]);
+                            i++;
+                            k++;
+                        }
+                    
+                        while (j < n2) {
+                            strcpy(arr[k], R[j]);
+                            j++;
+                            k++;
+                        }
+                    }
+                    
+                    void recursiveMergeSort(char arr[][100], int l, int r) {
+                        if (l < r) {
+                            int m = l + (r - l) / 2;
+                    
+                            recursiveMergeSort(arr, l, m);
+                            recursiveMergeSort(arr, m + 1, r);
+                    
+                            merge(arr, l, m, r);
+                        }
+                    }
+                    
+                    void printArray(char arr[][100], int n) {
+                        for (int i = 0; i < n; i++) {
+                            printf("%s ", arr[i]);
+                        }
+                        printf("\n");
+                    }
+                    
+                    int main() {
+                        int n;
+                        clock_t start, end;
+                        double cpu_time_used;
+                    
+                        printf("Enter the number of elements in the array: ");
+                        scanf("%d", &n);
+                    
+                        char arr[n][100];
+                        printf("Enter elements of the string array: ");
+                        for (int i = 0; i < n; i++) {
+                            scanf("%s", arr[i]);
+                        }
+                    
+                        printf("Unsorted Array: ");
+                        printArray(arr, n);
+                    
+                        start = clock();
+                        recursiveMergeSort(arr, 0, n - 1);
+                        end = clock();
+                    
+                        printf("Sorted Array: ");
+                        printArray(arr, n);
+                    
+                        cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+                        printf("Time taken for sorting: %f seconds\n", cpu_time_used);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of elements in the array: 3
+                Enter elements of the string array: hen
+                pig
+                bat
+                Unsorted Array: hen pig bat 
+                Sorted Array: bat hen pig 
+                Time taken for sorting: 0.000009 seconds
+                
+            </code></pre>
+        </section>
+        <section id="19">
+            <h2>19.  Enter a String Array From the User and Perform 
+                Quick Sort Algorithm Through Iteration. Also Calculate the Worst and Best Complexity With Exact Time.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <string.h>
+                    #include <time.h>
+                    
+                    void swap(char arr[][100], int a, int b) {
+                        char temp[100];
+                        strcpy(temp, arr[a]);
+                        strcpy(arr[a], arr[b]);
+                        strcpy(arr[b], temp);
+                    }
+                    
+                    int partition(char arr[][100], int low, int high) {
+                        char pivot[100];
+                        strcpy(pivot, arr[high]);
+                    
+                        int i = (low - 1);
+                    
+                        for (int j = low; j <= high - 1; j++) {
+                            if (strcmp(arr[j], pivot) < 0) {
+                                i++;
+                                swap(arr, i, j);
+                            }
+                        }
+                        swap(arr, i + 1, high);
+                        return (i + 1);
+                    }
+                    
+                    void iterativeQuickSort(char arr[][100], int low, int high) {
+                        int stack[high - low + 1];
+                        int top = -1;
+                    
+                        stack[++top] = low;
+                        stack[++top] = high;
+                    
+                        while (top >= 0) {
+                            high = stack[top--];
+                            low = stack[top--];
+                    
+                            int pi = partition(arr, low, high);
+                    
+                            if (pi - 1 > low) {
+                                stack[++top] = low;
+                                stack[++top] = pi - 1;
+                            }
+                    
+                            if (pi + 1 < high) {
+                                stack[++top] = pi + 1;
+                                stack[++top] = high;
+                            }
+                        }
+                    }
+                    
+                    void printArray(char arr[][100], int n) {
+                        for (int i = 0; i < n; i++) {
+                            printf("%s ", arr[i]);
+                        }
+                        printf("\n");
+                    }
+                    
+                    int main() {
+                        int n;
+                        clock_t start, end;
+                        double cpu_time_used;
+                    
+                        printf("Enter the number of elements in the array: ");
+                        scanf("%d", &n);
+                    
+                        char arr[n][100];
+                        printf("Enter elements of the string array: ");
+                        for (int i = 0; i < n; i++) {
+                            scanf("%s", arr[i]);
+                        }
+                    
+                        printf("Unsorted Array: ");
+                        printArray(arr, n);
+                    
+                        start = clock();
+                        iterativeQuickSort(arr, 0, n - 1);
+                        end = clock();
+                    
+                        printf("Sorted Array: ");
+                        printArray(arr, n);
+                    
+                        cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+                        printf("Time taken for sorting: %f seconds\n", cpu_time_used);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of elements in the array: 4
+                Enter elements of the string array: pink
+                red
+                green
+                blue
+                Unsorted Array: pink red green blue 
+                Sorted Array: blue green pink red 
+                Time taken for sorting: 0.000008 seconds
+                
+            </code></pre>
+        </section>
+        <section id="20">
+            <h2>20. Enter a String Array From the User and Perform Quick Sort
+                 Algorithm Through Recursion. Also Calculate the Worst and Best Complexity With Exact Time</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <string.h>
+                    #include <time.h>
+                    
+                    void swap(char arr[][100], int a, int b) {
+                        char temp[100];
+                        strcpy(temp, arr[a]);
+                        strcpy(arr[a], arr[b]);
+                        strcpy(arr[b], temp);
+                    }
+                    
+                    int partition(char arr[][100], int low, int high) {
+                        char pivot[100];
+                        strcpy(pivot, arr[high]);
+                    
+                        int i = (low - 1);
+                    
+                        for (int j = low; j <= high - 1; j++) {
+                            if (strcmp(arr[j], pivot) < 0) {
+                                i++;
+                                swap(arr, i, j);
+                            }
+                        }
+                        swap(arr, i + 1, high);
+                        return (i + 1);
+                    }
+                    
+                    void recursiveQuickSort(char arr[][100], int low, int high) {
+                        if (low < high) {
+                            int pi = partition(arr, low, high);
+                    
+                            recursiveQuickSort(arr, low, pi - 1);
+                            recursiveQuickSort(arr, pi + 1, high);
+                        }
+                    }
+                    
+                    void printArray(char arr[][100], int n) {
+                        for (int i = 0; i < n; i++) {
+                            printf("%s ", arr[i]);
+                        }
+                        printf("\n");
+                    }
+                    
+                    int main() {
+                        int n;
+                        clock_t start, end;
+                        double cpu_time_used;
+                    
+                        printf("Enter the number of elements in the array: ");
+                        scanf("%d", &n);
+                    
+                        char arr[n][100];
+                        printf("Enter elements of the string array: ");
+                        for (int i = 0; i < n; i++) {
+                            scanf("%s", arr[i]);
+                        }
+                    
+                        printf("Unsorted Array: ");
+                        printArray(arr, n);
+                    
+                        start = clock();
+                        recursiveQuickSort(arr, 0, n - 1);
+                        end = clock();
+                    
+                        printf("Sorted Array: ");
+                        printArray(arr, n);
+                    
+                        cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+                        printf("Time taken for sorting: %f seconds\n", cpu_time_used);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of elements in the array: 3
+                Enter elements of the string array: stocks
+                crypto
+                bitcoin
+                Unsorted Array: stocks crypto bitcoin 
+                Sorted Array: bitcoin crypto stocks 
+                Time taken for sorting: 0.000004 seconds
+            </code></pre>
+        </section>
+        
+
+        </div>
+    </body>
+</html>

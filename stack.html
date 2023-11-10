@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        /* Add CSS styles for code formatting and page layout */
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="content">
+        <h1>Stack</h1>
+        <section id="">
+            <h2>1. CREATE A STACK IMPLEMENTING THE OPERATIONS ON AN INTEGER 
+                ARRAY (PUSH, POP, PEEK, ISEMPTY, ISFULL)</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    #define MAX_SIZE 100
+                    
+                    // Structure to represent a stack
+                    struct Stack {
+                        int items[MAX_SIZE];
+                        int top;
+                    };
+                    
+                    // Initialize a stack
+                    void initStack(struct Stack *stack) {
+                        stack->top = -1;
+                    }
+                    
+                    // Check if the stack is empty
+                    int isEmpty(struct Stack *stack) {
+                        return stack->top == -1;
+                    }
+                    
+                    // Check if the stack is full
+                    int isFull(struct Stack *stack) {
+                        return stack->top == MAX_SIZE - 1;
+                    }
+                    
+                    // Push an item onto the stack
+                    void push(struct Stack *stack, int item) {
+                        if (isFull(stack)) {
+                            printf("Stack is full. Cannot push.\n");
+                        } else {
+                            stack->items[++stack->top] = item;
+                            printf("Pushed %d onto the stack.\n", item);
+                        }
+                    }
+                    
+                    // Pop an item from the stack
+                    int pop(struct Stack *stack) {
+                        if (isEmpty(stack)) {
+                            printf("Stack is empty. Cannot pop.\n");
+                            return -1; // Return a sentinel value for an empty stack
+                        } else {
+                            int poppedItem = stack->items[stack->top--];
+                            printf("Popped %d from the stack.\n", poppedItem);
+                            return poppedItem;
+                        }
+                    }
+                    
+                    // Peek at the top element of the stack without removing it
+                    int peek(struct Stack *stack) {
+                        if (isEmpty(stack)) {
+                            printf("Stack is empty. Cannot peek.\n");
+                            return -1; // Return a sentinel value for an empty stack
+                        } else {
+                            printf("Top element: %d\n", stack->items[stack->top]);
+                            return stack->items[stack->top];
+                        }
+                    }
+                    
+                    int main() {
+                        struct Stack stack;
+                        initStack(&stack);
+                    
+                        while (1) {
+                            printf("\nStack Operations:\n");
+                            printf("1. Push\n");
+                            printf("2. Pop\n");
+                            printf("3. Peek\n");
+                            printf("4. Is Empty?\n");
+                            printf("5. Is Full?\n");
+                            printf("6. Exit\n");
+                            printf("Enter your choice: ");
+                            
+                            int choice, value;
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter the value to push: ");
+                                    scanf("%d", &value);
+                                    push(&stack, value);
+                                    break;
+                                case 2:
+                                    pop(&stack);
+                                    break;
+                                case 3:
+                                    peek(&stack);
+                                    break;
+                                case 4:
+                                    if (isEmpty(&stack)) {
+                                        printf("Stack is empty.\n");
+                                    } else {
+                                        printf("Stack is not empty.\n");
+                                    }
+                                    break;
+                                case 5:
+                                    if (isFull(&stack)) {
+                                        printf("Stack is full.\n");
+                                    } else {
+                                        printf("Stack is not full.\n");
+                                    }
+                                    break;
+                                case 6:
+                                    printf("Exiting the program.\n");
+                                    return 0;
+                                default:
+                                    printf("Invalid choice. Please try again.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Stack Operations:
+                1. Push
+                2. Pop
+                3. Peek
+                4. Is Empty?
+                5. Is Full?
+                6. Exit
+                Enter your choice: 1
+                Enter the value to push: 22
+                Pushed 22 onto the stack.
+                
+                Stack Operations:
+                1. Push
+                2. Pop
+                3. Peek
+                4. Is Empty?
+                5. Is Full?
+                6. Exit
+                Enter your choice: 4
+                Stack is not empty.
+                
+                Stack Operations:
+                1. Push
+                2. Pop
+                3. Peek
+                4. Is Empty?
+                5. Is Full?
+                6. Exit
+                Enter your choice: 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>2. CREATE A STACK IMPLEMENTING THE OPERATIONS ON 
+                THE CHARACTERS ARRAY (PUSH, POP, PEEK, ISEMPTY, ISFULL)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdbool.h>
+                    
+                    #define MAX_SIZE 100
+                    
+                    // Structure to represent a character stack
+                    struct CharStack {
+                        char items[MAX_SIZE];
+                        int top;
+                    };
+                    
+                    // Initialize a character stack
+                    void initCharStack(struct CharStack *stack) {
+                        stack->top = -1;
+                    }
+                    
+                    // Check if the character stack is empty
+                    bool isEmptyCharStack(struct CharStack *stack) {
+                        return stack->top == -1;
+                    }
+                    
+                    // Check if the character stack is full
+                    bool isFullCharStack(struct CharStack *stack) {
+                        return stack->top == MAX_SIZE - 1;
+                    }
+                    
+                    // Push a character onto the stack
+                    void pushChar(struct CharStack *stack, char item) {
+                        if (isFullCharStack(stack)) {
+                            printf("Stack is full. Cannot push.\n");
+                        } else {
+                            stack->items[++stack->top] = item;
+                            printf("Pushed '%c' onto the stack.\n", item);
+                        }
+                    }
+                    
+                    // Pop a character from the stack
+                    char popChar(struct CharStack *stack) {
+                        if (isEmptyCharStack(stack)) {
+                            printf("Stack is empty. Cannot pop.\n");
+                            return '\0'; // Return a null character for an empty stack
+                        } else {
+                            char poppedItem = stack->items[stack->top--];
+                            printf("Popped '%c' from the stack.\n", poppedItem);
+                            return poppedItem;
+                        }
+                    }
+                    
+                    // Peek at the top character of the stack without removing it
+                    char peekChar(struct CharStack *stack) {
+                        if (isEmptyCharStack(stack)) {
+                            printf("Stack is empty. Cannot peek.\n");
+                            return '\0'; // Return a null character for an empty stack
+                        } else {
+                            printf("Top character: '%c'\n", stack->items[stack->top]);
+                            return stack->items[stack->top];
+                        }
+                    }
+                    
+                    int main() {
+                        struct CharStack charStack;
+                        initCharStack(&charStack);
+                    
+                        while (1) {
+                            printf("\nCharacter Stack Operations:\n");
+                            printf("1. Push\n");
+                            printf("2. Pop\n");
+                            printf("3. Peek\n");
+                            printf("4. Is Empty?\n");
+                            printf("5. Is Full?\n");
+                            printf("6. Exit\n");
+                            printf("Enter your choice: ");
+                            
+                            int choice;
+                            char value;
+                    
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter the character to push: ");
+                                    scanf(" %c", &value);
+                                    pushChar(&charStack, value);
+                                    break;
+                                case 2:
+                                    popChar(&charStack);
+                                    break;
+                                case 3:
+                                    peekChar(&charStack);
+                                    break;
+                                case 4:
+                                    if (isEmptyCharStack(&charStack)) {
+                                        printf("Stack is empty.\n");
+                                    } else {
+                                        printf("Stack is not empty.\n");
+                                    }
+                                    break;
+                                case 5:
+                                    if (isFullCharStack(&charStack)) {
+                                        printf("Stack is full.\n");
+                                    } else {
+                                        printf("Stack is not full.\n");
+                                    }
+                                    break;
+                                case 6:
+                                    printf("Exiting the program.\n");
+                                    return 0;
+                                default:
+                                    printf("Invalid choice. Please try again.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Character Stack Operations:
+                1. Push
+                2. Pop
+                3. Peek
+                4. Is Empty?
+                5. Is Full?
+                6. Exit
+                Enter your choice: 1
+                Enter the character to push: K
+                Pushed 'K' onto the stack.
+                
+                Character Stack Operations:
+                1. Push
+                2. Pop
+                3. Peek
+                4. Is Empty?
+                5. Is Full?
+                6. Exit
+                Enter your choice: 3
+                Top character: 'K'
+                
+                Character Stack Operations:
+                1. Push
+                2. Pop
+                3. Peek
+                4. Is Empty?
+                5. Is Full?
+                6. Exit
+                Enter your 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>3. CREATE A STACK IMPLEMENTING
+                 THE OPERATIONS ON AN INTEGER NODES (DYNAMICALLY) (PUSH, POP, PEEK, ISEMPTY, ISFULL)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure to represent a node in the integer stack
+                    struct Node {
+                        int data;
+                        struct Node* next;
+                    };
+                    
+                    // Structure to represent the integer stack
+                    struct IntStack {
+                        struct Node* top;
+                    };
+                    
+                    // Initialize an integer stack
+                    void initIntStack(struct IntStack* stack) {
+                        stack->top = NULL;
+                    }
+                    
+                    // Check if the integer stack is empty
+                    int isEmptyIntStack(struct IntStack* stack) {
+                        return stack->top == NULL;
+                    }
+                    
+                    // Push an integer onto the stack
+                    void pushInt(struct IntStack* stack, int value) {
+                        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                        if (newNode == NULL) {
+                            printf("Memory allocation failed. Cannot push.\n");
+                            return;
+                        }
+                        newNode->data = value;
+                        newNode->next = stack->top;
+                        stack->top = newNode;
+                        printf("Pushed %d onto the stack.\n", value);
+                    }
+                    
+                    // Pop an integer from the stack
+                    int popInt(struct IntStack* stack) {
+                        if (isEmptyIntStack(stack)) {
+                            printf("Stack is empty. Cannot pop.\n");
+                            return -1; // Return a sentinel value for an empty stack
+                        }
+                        struct Node* poppedNode = stack->top;
+                        int poppedValue = poppedNode->data;
+                        stack->top = poppedNode->next;
+                        free(poppedNode);
+                        printf("Popped %d from the stack.\n", poppedValue);
+                        return poppedValue;
+                    }
+                    
+                    // Peek at the top integer of the stack without removing it
+                    int peekInt(struct IntStack* stack) {
+                        if (isEmptyIntStack(stack)) {
+                            printf("Stack is empty. Cannot peek.\n");
+                            return -1; // Return a sentinel value for an empty stack
+                        }
+                        printf("Top element: %d\n", stack->top->data);
+                        return stack->top->data;
+                    }
+                    
+                    // Free memory used by the integer stack
+                    void freeIntStack(struct IntStack* stack) {
+                        while (!isEmptyIntStack(stack)) {
+                            popInt(stack);
+                        }
+                    }
+                    
+                    int main() {
+                        struct IntStack intStack;
+                        initIntStack(&intStack);
+                    
+                        while (1) {
+                            printf("\nInteger Stack Operations:\n");
+                            printf("1. Push\n");
+                            printf("2. Pop\n");
+                            printf("3. Peek\n");
+                            printf("4. Is Empty?\n");
+                            printf("5. Exit\n");
+                            printf("Enter your choice: ");
+                    
+                            int choice, value;
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter the integer to push: ");
+                                    scanf("%d", &value);
+                                    pushInt(&intStack, value);
+                                    break;
+                                case 2:
+                                    popInt(&intStack);
+                                    break;
+                                case 3:
+                                    peekInt(&intStack);
+                                    break;
+                                case 4:
+                                    if (isEmptyIntStack(&intStack)) {
+                                        printf("Stack is empty.\n");
+                                    } else {
+                                        printf("Stack is not empty.\n");
+                                    }
+                                    break;
+                                case 5:
+                                    freeIntStack(&intStack); // Free memory before exiting
+                                    printf("Exiting the program.\n");
+                                    return 0;
+                                default:
+                                    printf("Invalid choice. Please try again.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Integer Stack Operations:
+                1. Push
+                2. Pop
+                3. Peek
+                4. Is Empty?
+                5. Exit
+                Enter your choice: 1
+                Enter the integer to push: 21
+                Pushed 21 onto the stack.
+                
+                Integer Stack Operations:
+                1. Push
+                2. Pop
+                3. Peek
+                4. Is Empty?
+                5. Exit
+                Enter your choice: 2
+                Popped 21 from the stack.
+                
+                Integer Stack Operations:
+                1. Push
+                2. Pop
+                3. Peek
+                4. Is Empty?
+                5. Exit
+                Enter your choice: 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>4. CREATE A STACK IMPLEMENTING
+                 THE OPERATIONS ON THE CHARACTERS NODES (DYNAMICALLY) (PUSH, POP, PEEK, ISEMPTY, ISFULL)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure to represent a node in the character stack
+                    struct CharNode {
+                        char data;
+                        struct CharNode* next;
+                    };
+                    
+                    // Structure to represent the character stack
+                    struct CharStack {
+                        struct CharNode* top;
+                    };
+                    
+                    // Initialize a character stack
+                    void initCharStack(struct CharStack* stack) {
+                        stack->top = NULL;
+                    }
+                    
+                    // Check if the character stack is empty
+                    int isEmptyCharStack(struct CharStack* stack) {
+                        return stack->top == NULL;
+                    }
+                    
+                    // Push a character onto the stack
+                    void pushChar(struct CharStack* stack, char value) {
+                        struct CharNode* newNode = (struct CharNode*)malloc(sizeof(struct CharNode));
+                        if (newNode == NULL) {
+                            printf("Memory allocation failed. Cannot push.\n");
+                            return;
+                        }
+                        newNode->data = value;
+                        newNode->next = stack->top;
+                        stack->top = newNode;
+                        printf("Pushed '%c' onto the stack.\n", value);
+                    }
+                    
+                    // Pop a character from the stack
+                    char popChar(struct CharStack* stack) {
+                        if (isEmptyCharStack(stack)) {
+                            printf("Stack is empty. Cannot pop.\n");
+                            return '\0'; // Return a null character for an empty stack
+                        }
+                        struct CharNode* poppedNode = stack->top;
+                        char poppedValue = poppedNode->data;
+                        stack->top = poppedNode->next;
+                        free(poppedNode);
+                        printf("Popped '%c' from the stack.\n", poppedValue);
+                        return poppedValue;
+                    }
+                    
+                    // Peek at the top character of the stack without removing it
+                    char peekChar(struct CharStack* stack) {
+                        if (isEmptyCharStack(stack)) {
+                            printf("Stack is empty. Cannot peek.\n");
+                            return '\0'; // Return a null character for an empty stack
+                        }
+                        printf("Top character: '%c'\n", stack->top->data);
+                        return stack->top->data;
+                    }
+                    
+                    // Free memory used by the character stack
+                    void freeCharStack(struct CharStack* stack) {
+                        while (!isEmptyCharStack(stack)) {
+                            popChar(stack);
+                        }
+                    }
+                    
+                    int main() {
+                        struct CharStack charStack;
+                        initCharStack(&charStack);
+                    
+                        while (1) {
+                            printf("\nCharacter Stack Operations:\n");
+                            printf("1. Push\n");
+                            printf("2. Pop\n");
+                            printf("3. Peek\n");
+                            printf("4. Is Empty?\n");
+                            printf("5. Exit\n");
+                            printf("Enter your choice: ");
+                    
+                            int choice;
+                            char value;
+                    
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter the character to push: ");
+                                    scanf(" %c", &value);
+                                    pushChar(&charStack, value);
+                                    break;
+                                case 2:
+                                    popChar(&charStack);
+                                    break;
+                                case 3:
+                                    peekChar(&charStack);
+                                    break;
+                                case 4:
+                                    if (isEmptyCharStack(&charStack)) {
+                                        printf("Stack is empty.\n");
+                                    } else {
+                                        printf("Stack is not empty.\n");
+                                    }
+                                    break;
+                                case 5:
+                                    freeCharStack(&charStack); // Free memory before exiting
+                                    printf("Exiting the program.\n");
+                                    return 0;
+                                default:
+                                    printf("Invalid choice. Please try again.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Character Stack Operations:
+                1. Push
+                2. Pop
+                3. Peek
+                4. Is Empty?
+                5. Exit
+                Enter your choice: 1
+                Enter the character to push: K
+                Pushed 'K' onto the stack.
+                
+                Character Stack Operations:
+                1. Push
+                2. Pop
+                3. Peek
+                4. Is Empty?
+                5. Exit
+                Enter your choice: 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>5. ENTER THE STRING FROM THE USER AND REVERSE THE STRING USING STACKS.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <string.h>
+                    
+                    #define MAX_SIZE 100
+                    
+                    // Structure to represent a character stack
+                    struct CharStack {
+                        char items[MAX_SIZE];
+                        int top;
+                    };
+                    
+                    // Initialize a character stack
+                    void initCharStack(struct CharStack *stack) {
+                        stack->top = -1;
+                    }
+                    
+                    // Check if the character stack is empty
+                    int isEmptyCharStack(struct CharStack *stack) {
+                        return stack->top == -1;
+                    }
+                    
+                    // Push a character onto the stack
+                    void pushChar(struct CharStack *stack, char value) {
+                        if (stack->top == MAX_SIZE - 1) {
+                            printf("Stack is full. Cannot push.\n");
+                            return;
+                        }
+                        stack->items[++stack->top] = value;
+                    }
+                    
+                    // Pop a character from the stack
+                    char popChar(struct CharStack *stack) {
+                        if (isEmptyCharStack(stack)) {
+                            printf("Stack is empty. Cannot pop.\n");
+                            return '\0'; // Return a null character for an empty stack
+                        }
+                        return stack->items[stack->top--];
+                    }
+                    
+                    int main() {
+                        struct CharStack charStack;
+                        initCharStack(&charStack);
+                    
+                        char inputString[MAX_SIZE];
+                        printf("Enter a string: ");
+                        fgets(inputString, sizeof(inputString), stdin);
+                    
+                        // Push characters from the input string onto the stack
+                        for (int i = 0; i < strlen(inputString); i++) {
+                            if (inputString[i] != '\n') {
+                                pushChar(&charStack, inputString[i]);
+                            }
+                        }
+                    
+                        // Pop characters from the stack to reverse the string
+                        printf("Reversed string: ");
+                        while (!isEmptyCharStack(&charStack)) {
+                            putchar(popChar(&charStack));
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: KHUSHBOO SANDHU
+                Reversed string: UHDNAS OOBHSUHK
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>6. CREATE THE PROGRAM TO MATCH THE SINGLE BRACKET USING STACKS.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdbool.h>
+                    #include <string.h>
+                    
+                    #define MAX_SIZE 100
+                    
+                    // Structure to represent a character stack
+                    struct CharStack {
+                        char items[MAX_SIZE];
+                        int top;
+                    };
+                    
+                    // Initialize a character stack
+                    void initCharStack(struct CharStack *stack) {
+                        stack->top = -1;
+                    }
+                    
+                    // Check if the character stack is empty
+                    bool isEmptyCharStack(struct CharStack *stack) {
+                        return stack->top == -1;
+                    }
+                    
+                    // Push a character onto the stack
+                    void pushChar(struct CharStack *stack, char value) {
+                        if (stack->top == MAX_SIZE - 1) {
+                            printf("Stack is full. Cannot push.\n");
+                            return;
+                        }
+                        stack->items[++stack->top] = value;
+                    }
+                    
+                    // Pop a character from the stack
+                    char popChar(struct CharStack *stack) {
+                        if (isEmptyCharStack(stack)) {
+                            printf("Stack is empty. Cannot pop.\n");
+                            return '\0'; // Return a null character for an empty stack
+                        }
+                        return stack->items[stack->top--];
+                    }
+                    
+                    // Check if the given brackets are matching
+                    bool areBracketsMatching(char opening, char closing) {
+                        return (opening == '(' && closing == ')') ||
+                               (opening == '{' && closing == '}') ||
+                               (opening == '[' && closing == ']');
+                    }
+                    
+                    // Check if the input string has balanced brackets
+                    bool hasBalancedBrackets(const char *inputString) {
+                        struct CharStack charStack;
+                        initCharStack(&charStack);
+                    
+                        for (int i = 0; inputString[i] != '\0'; i++) {
+                            if (inputString[i] == '(' || inputString[i] == '{' || inputString[i] == '[') {
+                                pushChar(&charStack, inputString[i]);
+                            } else if (inputString[i] == ')' || inputString[i] == '}' || inputString[i] == ']') {
+                                if (isEmptyCharStack(&charStack) || !areBracketsMatching(charStack.items[charStack.top], inputString[i])) {
+                                    return false; // Unmatched closing bracket
+                                }
+                                popChar(&charStack);
+                            }
+                        }
+                    
+                        return isEmptyCharStack(&charStack); // Check if all brackets are matched
+                    }
+                    
+                    int main() {
+                        char inputString[MAX_SIZE];
+                        printf("Enter a string with brackets: ");
+                        fgets(inputString, sizeof(inputString), stdin);
+                    
+                        if (hasBalancedBrackets(inputString)) {
+                            printf("Brackets are balanced.\n");
+                        } else {
+                            printf("Brackets are not balanced.\n");
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string with brackets: {BCA
+                    Brackets are not balanced.
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>7. CREATE TWO INTEGER STACKS IN A SINGLE ARRAY.</h2>
+            <pre><code>
+                #include 
+                #include 
+                #include 
+                
+                #define MAX_SIZE 100
+                
+                int stack[MAX_SIZE];
+                int top = -1;
+                
+                int isEmpty() {
+                    return top == -1;
+                }
+                
+                void push(int value) {
+                    if (top < MAX_SIZE - 1) {
+                        stack[++top] = value;
+                    }
+                }
+                
+                int pop() {
+                    if (!isEmpty()) {
+                        return stack[top--];
+                    }
+                    return -1; // Return an error value
+                }
+                
+                int isOperator(char ch) {
+                    return (ch == '+' || ch == '-' || ch == '*' || ch == '/');
+                }
+                
+                int evaluatePrefix(char prefix[]) {
+                    int length = strlen(prefix);
+                
+                    for (int i = length - 1; i >= 0; i--) {
+                        char ch = prefix[i];
+                
+                        if (ch >= '0' && ch <= '9') {
+                            push(ch - '0'); // Convert character to integer and push to stack
+                        } else if (isOperator(ch)) {
+                            int operand1 = pop();
+                            int operand2 = pop();
+                
+                            if (operand1 == -1 || operand2 == -1) {
+                                printf("Error: Invalid prefix expression.\n");
+                                return -1; // Error
+                            }
+                
+                            switch (ch) {
+                                case '+':
+                                    push(operand1 + operand2);
+                                    break;
+                                case '-':
+                                    push(operand1 - operand2);
+                                    break;
+                                case '*':
+                                    push(operand1 * operand2);
+                                    break;
+                                case '/':
+                                    if (operand2 == 0) {
+                                        printf("Error: Division by zero.\n");
+                                        return -1; // Error
+                                    }
+                                    push(operand1 / operand2);
+                                    break;
+                            }
+                        }
+                    }
+                
+                    if (!isEmpty()) {
+                        return stack[top];
+                    } else {
+                        printf("Error: Invalid prefix expression.\n");
+                        return -1; // Error
+                    }
+                }
+                
+                int main() {
+                    char prefix[MAX_SIZE];
+                
+                    printf("Enter a prefix expression: ");
+                    scanf(" %[^\n]s", prefix);
+                
+                    int result = evaluatePrefix(prefix);
+                
+                    if (result != -1) {
+                        printf("Result: %d\n", result);
+                    }
+                
+                    return 0;
+                }
+                
+        
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a prefix expression: + 5 * 3 2
+                Result: 11
+            
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>8. SORT THE STACK IN ASCENDING ORDER USING INTEGER ARRAY.</h2>
+            <pre><code>
+                #include 
+                #include 
+                #include 
+                
+                #define MAX_SIZE 100
+                
+                int stack[MAX_SIZE];
+                int top = -1;
+                
+                int isEmpty() {
+                    return top == -1;
+                }
+                
+                void push(int value) {
+                    if (top < MAX_SIZE - 1) {
+                        stack[++top] = value;
+                    }
+                }
+                
+                int pop() {
+                    if (!isEmpty()) {
+                        return stack[top--];
+                    }
+                    return -1; // Return an error value
+                }
+                
+                int isOperator(char ch) {
+                    return (ch == '+' || ch == '-' || ch == '*' || ch == '/');
+                }
+                
+                int evaluatePostfix(char postfix[]) {
+                    int length = strlen(postfix);
+                
+                    for (int i = 0; i < length; i++) {
+                        char ch = postfix[i];
+                
+                        if (ch >= '0' && ch <= '9') {
+                            push(ch - '0'); // Convert character to integer and push to stack
+                        } else if (isOperator(ch)) {
+                            int operand2 = pop();
+                            int operand1 = pop();
+                
+                            if (operand1 == -1 || operand2 == -1) {
+                                printf("Error: Invalid postfix expression.\n");
+                                return -1; // Error
+                            }
+                
+                            switch (ch) {
+                                case '+':
+                                    push(operand1 + operand2);
+                                    break;
+                                case '-':
+                                    push(operand1 - operand2);
+                                    break;
+                                case '*':
+                                    push(operand1 * operand2);
+                                    break;
+                                case '/':
+                                    if (operand2 == 0) {
+                                        printf("Error: Division by zero.\n");
+                                        return -1; // Error
+                                    }
+                                    push(operand1 / operand2);
+                                    break;
+                            }
+                        }
+                    }
+                
+                    if (!isEmpty()) {
+                        return stack[top];
+                    } else {
+                        printf("Error: Invalid postfix expression.\n");
+                        return -1; // Error
+                    }
+                }
+                
+                int main() {
+                    char postfix[MAX_SIZE];
+                
+                    printf("Enter a postfix expression: ");
+                    scanf(" %[^\n]s", postfix);
+                
+                    int result = evaluatePostfix(postfix);
+                
+                    if (result != -1) {
+                        printf("Result: %d\n", result);
+                    }
+                
+                    return 0;
+                }
+                
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a postfix expression: 7 8 3 9 /*+
+                Result: 7
+            
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>9. ENTER THE INFIX EXPRESSION FROM USER AND CONVERT INTO PREFIX EXPRESSION.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <string.h>
+                    #include <ctype.h>
+                    
+                    #define MAX_SIZE 100
+                    
+                    // Structure to represent a character stack
+                    struct CharStack {
+                        char items[MAX_SIZE];
+                        int top;
+                    };
+                    
+                    // Initialize a character stack
+                    void initCharStack(struct CharStack *stack) {
+                        stack->top = -1;
+                    }
+                    
+                    // Check if the character stack is empty
+                    int isEmptyCharStack(struct CharStack *stack) {
+                        return stack->top == -1;
+                    }
+                    
+                    // Push a character onto the stack
+                    void pushChar(struct CharStack *stack, char value) {
+                        if (stack->top == MAX_SIZE - 1) {
+                            printf("Stack is full. Cannot push.\n");
+                            return;
+                        }
+                        stack->items[++stack->top] = value;
+                    }
+                    
+                    // Pop a character from the stack
+                    char popChar(struct CharStack *stack) {
+                        if (isEmptyCharStack(stack)) {
+                            printf("Stack is empty. Cannot pop.\n");
+                            return '\0'; // Return a null character for an empty stack
+                        }
+                        return stack->items[stack->top--];
+                    }
+                    
+                    // Get the precedence of an operator
+                    int getPrecedence(char operator) {
+                        switch (operator) {
+                            case '+':
+                            case '-':
+                                return 1;
+                            case '*':
+                            case '/':
+                                return 2;
+                            case '^':
+                                return 3;
+                            default:
+                                return 0;
+                        }
+                    }
+                    
+                    // Convert infix expression to prefix expression
+                    void infixToPrefix(char *infix, char *prefix) {
+                        struct CharStack operatorStack;
+                        initCharStack(&operatorStack);
+                    
+                        struct CharStack resultStack;
+                        initCharStack(&resultStack);
+                    
+                        // Reverse the infix expression to process it from right to left
+                        int len = strlen(infix);
+                        for (int i = len - 1; i >= 0; i--) {
+                            char c = infix[i];
+                    
+                            if (isalnum(c)) {
+                                // Operand, push to result stack
+                                pushChar(&resultStack, c);
+                            } else if (c == ')') {
+                                // Right parenthesis, push to operator stack
+                                pushChar(&operatorStack, c);
+                            } else if (c == '(') {
+                                // Left parenthesis, pop operators from the stack and push to the result stack until a matching right parenthesis is encountered
+                                while (!isEmptyCharStack(&operatorStack) && operatorStack.items[operatorStack.top] != ')') {
+                                    pushChar(&resultStack, popChar(&operatorStack));
+                                }
+                                // Pop the matching right parenthesis
+                                popChar(&operatorStack);
+                            } else {
+                                // Operator, push to operator stack according to precedence
+                                while (!isEmptyCharStack(&operatorStack) && getPrecedence(operatorStack.items[operatorStack.top]) >= getPrecedence(c)) {
+                                    pushChar(&resultStack, popChar(&operatorStack));
+                                }
+                                pushChar(&operatorStack, c);
+                            }
+                        }
+                    
+                        // Pop any remaining operators from the operator stack to the result stack
+                        while (!isEmptyCharStack(&operatorStack)) {
+                            pushChar(&resultStack, popChar(&operatorStack));
+                        }
+                    
+                        // Reverse the result stack to get the prefix expression
+                        int prefixIndex = 0;
+                        while (!isEmptyCharStack(&resultStack)) {
+                            prefix[prefixIndex++] = popChar(&resultStack);
+                        }
+                        prefix[prefixIndex] = '\0';
+                    
+                        // Reverse the prefix expression to obtain the correct order
+                        int i, j;
+                        for (i = 0, j = strlen(prefix) - 1; i < j; i++, j--) {
+                            char temp = prefix[i];
+                            prefix[i] = prefix[j];
+                            prefix[j] = temp;
+                        }
+                    }
+                    
+                    int main() {
+                        char infix[MAX_SIZE];
+                        char prefix[MAX_SIZE];
+                    
+                        printf("Enter an infix expression: ");
+                        fgets(infix, sizeof(infix), stdin);
+                    
+                        infixToPrefix(infix, prefix);
+                    
+                        printf("Prefix expression: %s\n", prefix);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter an infix expression: BCA
+                Prefix expression: ACB
+                
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>10. ENTER THE INFIX EXPRESSION FROM USER AND CONVERT INTO POSTFIX EXPRESSION.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <string.h>
+                    #include <ctype.h>
+                    
+                    #define MAX_SIZE 100
+                    
+                    // Structure to represent a character stack
+                    struct CharStack {
+                        char items[MAX_SIZE];
+                        int top;
+                    };
+                    
+                    // Initialize a character stack
+                    void initCharStack(struct CharStack *stack) {
+                        stack->top = -1;
+                    }
+                    
+                    // Check if the character stack is empty
+                    int isEmptyCharStack(struct CharStack *stack) {
+                        return stack->top == -1;
+                    }
+                    
+                    // Push a character onto the stack
+                    void pushChar(struct CharStack *stack, char value) {
+                        if (stack->top == MAX_SIZE - 1) {
+                            printf("Stack is full. Cannot push.\n");
+                            return;
+                        }
+                        stack->items[++stack->top] = value;
+                    }
+                    
+                    // Pop a character from the stack
+                    char popChar(struct CharStack *stack) {
+                        if (isEmptyCharStack(stack)) {
+                            printf("Stack is empty. Cannot pop.\n");
+                            return '\0'; // Return a null character for an empty stack
+                        }
+                        return stack->items[stack->top--];
+                    }
+                    
+                    // Get the precedence of an operator
+                    int getPrecedence(char operator) {
+                        switch (operator) {
+                            case '+':
+                            case '-':
+                                return 1;
+                            case '*':
+                            case '/':
+                                return 2;
+                            case '^':
+                                return 3;
+                            default:
+                                return 0;
+                        }
+                    }
+                    
+                    // Convert infix expression to postfix expression
+                    void infixToPostfix(char *infix, char *postfix) {
+                        struct CharStack operatorStack;
+                        initCharStack(&operatorStack);
+                    
+                        int infixLength = strlen(infix);
+                        int postfixIndex = 0;
+                    
+                        for (int i = 0; i < infixLength; i++) {
+                            char c = infix[i];
+                    
+                            if (isalnum(c)) {
+                                // Operand, add to the postfix expression
+                                postfix[postfixIndex++] = c;
+                            } else if (c == '(') {
+                                // Left parenthesis, push to operator stack
+                                pushChar(&operatorStack, c);
+                            } else if (c == ')') {
+                                // Right parenthesis, pop operators from the stack and add to the postfix expression until a matching left parenthesis is encountered
+                                while (!isEmptyCharStack(&operatorStack) && operatorStack.items[operatorStack.top] != '(') {
+                                    postfix[postfixIndex++] = popChar(&operatorStack);
+                                }
+                                // Pop the matching left parenthesis
+                                popChar(&operatorStack);
+                            } else {
+                                // Operator, push to operator stack according to precedence
+                                while (!isEmptyCharStack(&operatorStack) &&
+                                       getPrecedence(operatorStack.items[operatorStack.top]) >= getPrecedence(c)) {
+                                    postfix[postfixIndex++] = popChar(&operatorStack);
+                                }
+                                pushChar(&operatorStack, c);
+                            }
+                        }
+                    
+                        // Pop any remaining operators from the operator stack and add to the postfix expression
+                        while (!isEmptyCharStack(&operatorStack)) {
+                            postfix[postfixIndex++] = popChar(&operatorStack);
+                        }
+                    
+                        // Null-terminate the postfix expression
+                        postfix[postfixIndex] = '\0';
+                    }
+                    
+                    int main() {
+                        char infix[MAX_SIZE];
+                        char postfix[MAX_SIZE];
+                    
+                        printf("Enter an infix expression: ");
+                        fgets(infix, sizeof(infix), stdin);
+                    
+                        infixToPostfix(infix, postfix);
+                    
+                        printf("Postfix expression: %s\n", postfix);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter an infix expression: ABBA
+                Postfix expression: ABBA
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>11. CREATE A PROGRAM TO EVALUATE THE PREFIX EXPRESSION.</h2>
+            <pre><code>
+                #include 
+                    #include 
+                    
+                    #define MAX_SIZE 100
+                    
+                    // Structure to represent two stacks
+                    struct TwoStacks {
+                        int top1;     // Top index for stack 1
+                        int top2;     // Top index for stack 2
+                        int array[MAX_SIZE];
+                    };
+                    
+                    // Initialize two stacks
+                    struct TwoStacks* initializeTwoStacks() {
+                        struct TwoStacks* ts = (struct TwoStacks*)malloc(sizeof(struct TwoStacks));
+                        if (!ts) {
+                            printf("Memory allocation error\n");
+                            exit(1);
+                        }
+                        ts->top1 = -1; // Initialize top of stack 1
+                        ts->top2 = MAX_SIZE; // Initialize top of stack 2
+                        return ts;
+                    }
+                    
+                    // Push an element onto stack 1
+                    void push1(struct TwoStacks* ts, int data) {
+                        if (ts->top1 < ts->top2 - 1) {
+                            ts->array[++ts->top1] = data;
+                        } else {
+                            printf("Stack 1 is full. Cannot push.\n");
+                        }
+                    }
+                    
+                    // Push an element onto stack 2
+                    void push2(struct TwoStacks* ts, int data) {
+                        if (ts->top1 < ts->top2 - 1) {
+                            ts->array[--ts->top2] = data;
+                        } else {
+                            printf("Stack 2 is full. Cannot push.\n");
+                        }
+                    }
+                    
+                    // Pop an element from stack 1
+                    int pop1(struct TwoStacks* ts) {
+                        if (ts->top1 >= 0) {
+                            return ts->array[ts->top1--];
+                        } else {
+                            printf("Stack 1 is empty. Cannot pop.\n");
+                            return -1; // Return an error value
+                        }
+                    }
+                    
+                    // Pop an element from stack 2
+                    int pop2(struct TwoStacks* ts) {
+                        if (ts->top2 < MAX_SIZE) {
+                            return ts->array[ts->top2++];
+                        } else {
+                            printf("Stack 2 is empty. Cannot pop.\n");
+                            return -1; // Return an error value
+                        }
+                    }
+                    
+                    // Driver program to test the two-stack implementation
+                    int main() {
+                        struct TwoStacks* ts = initializeTwoStacks();
+                    
+                        int num_elements, element;
+                    
+                        printf("Enter the number of elements to push onto stack 2: ");
+                        scanf("%d", &num_elements);
+                        printf("Enter %d elements to push onto stack 2:\n", num_elements);
+                        for (int i = 0; i < num_elements; i++) {
+                            scanf("%d", &element);
+                            push2(ts, element);
+                        }
+                    
+                        printf("Enter the number of elements to push onto stack 1: ");
+                        scanf("%d", &num_elements);
+                        printf("Enter %d elements to push onto stack 1:\n", num_elements);
+                        for (int i = 0; i < num_elements; i++) {
+                            scanf("%d", &element);
+                            push1(ts, element);
+                        }
+                    
+                        printf("Popped from stack 1: %d\n", pop1(ts));
+                        printf("Popped from stack 2: %d\n", pop2(ts));
+                    
+                        return 0;
+                    }
+                    
+            
+             </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of elements to push onto stack 2: 3
+                Enter 3 elements to push onto stack 2:
+                5
+                6
+                7
+                Enter the number of elements to push onto stack 1: 3
+                Enter 3 elements to push onto stack 1:
+                2
+                4
+                1
+                Popped from stack 1: 1
+                Popped from stack 2: 7
+            
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>12. CREATE A PROGRAM TO EVALUATE THE POSTFIX EXPRESSION.</h2>
+            <pre><code>
+                #include 
+                #include 
+                
+                struct Stack {
+                    int* array;    // Array to store stack elements
+                    int top;       // Index of the top element
+                    int capacity;  // Maximum capacity of the stack
+                };
+                
+                // Create and initialize a dynamic stack with a given capacity
+                struct Stack* createStack(int capacity) {
+                    struct Stack* stack = (struct Stack*)malloc(sizeof(struct Stack));
+                    if (!stack) {
+                        printf("Memory allocation error.\n");
+                        exit(1);
+                    }
+                    stack->capacity = capacity;
+                    stack->top = -1;
+                    stack->array = (int*)malloc(stack->capacity * sizeof(int));
+                    if (!stack->array) {
+                        printf("Memory allocation error.\n");
+                        exit(1);
+                    }
+                    return stack;
+                }
+                
+                // Check if the stack is empty
+                int isEmpty(struct Stack* stack) {
+                    return (stack->top == -1);
+                }
+                
+                // Check if the stack is full
+                int isFull(struct Stack* stack) {
+                    return (stack->top == stack->capacity - 1);
+                }
+                
+                // Push an element onto the stack
+                void push(struct Stack* stack, int item) {
+                    if (isFull(stack)) {
+                        printf("Stack is full. Cannot push %d.\n", item);
+                        return;
+                    }
+                    stack->array[++stack->top] = item;
+                    printf("Pushed %d onto the stack.\n", item);
+                }
+                
+                // Pop an element from the stack
+                int pop(struct Stack* stack) {
+                    if (isEmpty(stack)) {
+                        printf("Stack is empty. Cannot pop.\n");
+                        return -1; // Return an error value
+                    }
+                    return stack->array[stack->top--];
+                }
+                
+                // Peek at the top element of the stack without removing it
+                int peek(struct Stack* stack) {
+                    if (isEmpty(stack)) {
+                        printf("Stack is empty. Cannot peek.\n");
+                        return -1; // Return an error value
+                    }
+                    return stack->array[stack->top];
+                }
+                
+                // Driver program to test dynamic stack operations
+                int main() {
+                    int capacity, num_elements, element;
+                
+                    printf("Enter the capacity of the stack: ");
+                    scanf("%d", &capacity);
+                    struct Stack* stack = createStack(capacity);
+                
+                    printf("Enter the number of elements to push onto the stack: ");
+                    scanf("%d", &num_elements);
+                
+                    printf("Enter %d elements to push onto the stack:\n", num_elements);
+                    for (int i = 0; i < num_elements; i++) {
+                        scanf("%d", &element);
+                        push(stack, element);
+                    }
+                
+                    printf("Top element: %d\n", peek(stack));
+                    printf("Popped element: %d\n", pop(stack));
+                    printf("Top element: %d\n", peek(stack));
+                
+                    return 0;
+                }
+                
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the capacity of the stack: 5
+                Enter the number of elements to push onto the stack: 3
+                Enter 3 elements to push onto the stack:
+                2
+                Pushed 2 onto the stack.
+                3
+                Pushed 3 onto the stack.
+                5
+                Pushed 5 onto the stack.
+                Top element: 5
+                Popped element: 5
+                Top element: 3
+                
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>13. IMPLEMENT THE TOWER OF HANOI USING STACKS.</h2>
+            <pre><code>
+                #include 
+                #include 
+                #include 
+                
+                #define MAX_SIZE 100
+                
+                struct Stack {
+                    char* array[MAX_SIZE];
+                    int top;
+                };
+                
+                struct Stack* createStack() {
+                    struct Stack* stack = (struct Stack*)malloc(sizeof(struct Stack));
+                    if (!stack) {
+                        printf("Memory allocation error.\n");
+                        exit(1);
+                    }
+                    stack->top = -1;
+                    return stack;
+                }
+                
+                int isEmpty(struct Stack* stack) {
+                    return (stack->top == -1);
+                }
+                
+                int isFull(struct Stack* stack) {
+                    return (stack->top == MAX_SIZE - 1);
+                }
+                
+                void push(struct Stack* stack, const char* item) {
+                    if (isFull(stack)) {
+                        printf("Stack is full. Cannot push %s.\n", item);
+                        return;
+                    }
+                    stack->array[++stack->top] = strdup(item);
+                    printf("Pushed \"%s\" onto the stack.\n", item);
+                }
+                
+                char* pop(struct Stack* stack) {
+                    if (isEmpty(stack)) {
+                        printf("Stack is empty. Cannot pop.\n");
+                        return NULL;
+                    }
+                    return stack->array[stack->top--];
+                }
+                
+                char* peek(struct Stack* stack) {
+                    if (isEmpty(stack)) {
+                        printf("Stack is empty. Cannot peek.\n");
+                        return NULL;
+                    }
+                    return stack->array[stack->top];
+                }
+                
+                void destroyStack(struct Stack* stack) {
+                    while (!isEmpty(stack)) {
+                        free(pop(stack));
+                    }
+                    free(stack);
+                }
+                
+                int main() {
+                    struct Stack* stack = createStack();
+                    char element[100];
+                    
+                    printf("Enter the number of elements to push onto the stack: ");
+                    int num_elements;
+                    scanf("%d", &num_elements);
+                    
+                    printf("Enter %d strings to push onto the stack:\n", num_elements);
+                    for (int i = 0; i < num_elements; i++) {
+                        scanf("%s", element);
+                        push(stack, element);
+                    }
+                    
+                    printf("Top element: %s\n", peek(stack));
+                    
+                    char* popped = pop(stack);
+                    if (popped) {
+                        printf("Popped element: %s\n", popped);
+                        free(popped);
+                    }
+                    
+                    printf("Top element: %s\n", peek(stack));
+                    
+                    destroyStack(stack);
+                    
+                    return 0;
+                }
+      
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of elements to push onto the stack: 4
+                Enter 4 strings to push onto the stack:
+                s
+                Pushed "s" onto the stack.
+                o
+                Pushed "o" onto the stack.
+                n
+                Pushed "n" onto the stack.
+                g
+                Pushed "g" onto the stack.
+                Top element: g
+                Popped element: g
+                Top element: n
+                
+            
+            </code></pre>
+        </section>        
+        </div>
+    </body>
+</html>

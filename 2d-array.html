@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2D ARRAY</title>
+    <style>
+        /* Add CSS styles for code formatting and page layout */
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="content">
+        <h1>2D Arrays</h1>
+        <section id="1">
+            <h2>1.  Enter a matrix of 4 rows and 2 columns from the user display it in matrix format.</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    int main() {
+                        int matrix[4][2];
+                        int i, j;
+                    
+                        // Input the matrix elements
+                        printf("Enter the elements of the 4x2 matrix:\n");
+                    
+                        for (i = 0; i < 4; i++) {
+                            for (j = 0; j < 2; j++) {
+                                printf("Enter element at row %d, column %d: ", i + 1, j + 1);
+                                scanf("%d", &matrix[i][j]);
+                            }
+                        }
+                    
+                        // Display the matrix in matrix format
+                        printf("\nMatrix Format:\n");
+                        for (i = 0; i < 4; i++) {
+                            for (j = 0; j < 2; j++) {
+                                printf("%d\t", matrix[i][j]);
+                            }
+                            printf("\n");
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the elements of the 4x2 matrix:
+                Enter element at row 1, column 1: 3
+                Enter element at row 1, column 2: 4
+                Enter element at row 2, column 1: 5
+                Enter element at row 2, column 2: 6
+                Enter element at row 3, column 1: 7
+                Enter element at row 3, column 2: 3
+                Enter element at row 4, column 1: 4
+                Enter element at row 4, column 2: 5
+                Matrix Format:
+                3	4	
+                5	6	
+                7	3	
+                4	5	
+                
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>2.  Enter two Matrices from user, add the matrices and display the answer?</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    int main() {
+                        int rows, cols;
+                    
+                        printf("Enter the number of rows: ");
+                        scanf("%d", &rows);
+                    
+                        printf("Enter the number of columns: ");
+                        scanf("%d", &cols);
+                    
+                        int matrix1[rows][cols], matrix2[rows][cols], sum[rows][cols];
+                    
+                        printf("Enter elements of the first matrix:\n");
+                        for (int i = 0; i < rows; i++) {
+                            for (int j = 0; j < cols; j++) {
+                                printf("Enter element at row %d, column %d: ", i + 1, j + 1);
+                                scanf("%d", &matrix1[i][j]);
+                            }
+                        }
+                    
+                        printf("Enter elements of the second matrix:\n");
+                        for (int i = 0; i < rows; i++) {
+                            for (int j = 0; j < cols; j++) {
+                                printf("Enter element at row %d, column %d: ", i + 1, j + 1);
+                                scanf("%d", &matrix2[i][j]);
+                            }
+                        }
+                    
+                        // Adding the matrices
+                        for (int i = 0; i < rows; i++) {
+                            for (int j = 0; j < cols; j++) {
+                                sum[i][j] = matrix1[i][j] + matrix2[i][j];
+                            }
+                        }
+                    
+                        // Displaying the result
+                        printf("Resultant matrix after addition:\n");
+                        for (int i = 0; i < rows; i++) {
+                            for (int j = 0; j < cols; j++) {
+                                printf("%d ", sum[i][j]);
+                            }
+                            printf("\n");
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of rows: 2
+                Enter the number of columns: 2
+                Enter elements of the first matrix:
+                Enter element at row 1, column 1: 3
+                Enter element at row 1, column 2: 4
+                Enter element at row 2, column 1: 5
+                Enter element at row 2, column 2: 6
+                Enter elements of the second matrix:
+                Enter element at row 1, column 1: 9
+                Enter element at row 1, column 2: 8
+                Enter element at row 2, column 1: 7
+                Enter element at row 2, column 2: 6
+                Resultant matrix after addition:
+                12 12 
+                12 12 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>3.  Enter two Matrices from user, subtract the matrices and display the answer?</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    int main() {
+                        int rows, cols;
+                    
+                        printf("Enter the number of rows: ");
+                        scanf("%d", &rows);
+                    
+                        printf("Enter the number of columns: ");
+                        scanf("%d", &cols);
+                    
+                        int matrix1[rows][cols], matrix2[rows][cols], difference[rows][cols];
+                    
+                        printf("Enter elements of the first matrix:\n");
+                        for (int i = 0; i < rows; i++) {
+                            for (int j = 0; j < cols; j++) {
+                                printf("Enter element at row %d, column %d: ", i + 1, j + 1);
+                                scanf("%d", &matrix1[i][j]);
+                            }
+                        }
+                    
+                        printf("Enter elements of the second matrix:\n");
+                        for (int i = 0; i < rows; i++) {
+                            for (int j = 0; j < cols; j++) {
+                                printf("Enter element at row %d, column %d: ", i + 1, j + 1);
+                                scanf("%d", &matrix2[i][j]);
+                            }
+                        }
+                    
+                        // Subtracting the matrices
+                        for (int i = 0; i < rows; i++) {
+                            for (int j = 0; j < cols; j++) {
+                                difference[i][j] = matrix1[i][j] - matrix2[i][j];
+                            }
+                        }
+                    
+                        // Displaying the result
+                        printf("Resultant matrix after subtraction:\n");
+                        for (int i = 0; i < rows; i++) {
+                            for (int j = 0; j < cols; j++) {
+                                printf("%d ", difference[i][j]);
+                            }
+                            printf("\n");
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of rows: 2
+                Enter the number of columns: 2
+                Enter elements of the first matrix:
+                Enter element at row 1, column 1: 9
+                Enter element at row 1, column 2: 8
+                Enter element at row 2, column 1: 6
+                Enter element at row 2, column 2: 7
+                Enter elements of the second matrix:
+                Enter element at row 1, column 1: 4
+                Enter element at row 1, column 2: 9
+                Enter element at row 2, column 1: 4
+                Enter element at row 2, column 2: 5
+                Resultant matrix after subtraction:
+                5 -1 
+                2 2 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>4.  Enter two Matrices from user, multiply the matrices and display the answer?</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    int main() {
+                        int rows1, cols1, rows2, cols2;
+                    
+                        printf("Enter the number of rows for the first matrix: ");
+                        scanf("%d", &rows1);
+                        printf("Enter the number of columns for the first matrix: ");
+                        scanf("%d", &cols1);
+                    
+                        printf("Enter the number of rows for the second matrix: ");
+                        scanf("%d", &rows2);
+                        printf("Enter the number of columns for the second matrix: ");
+                        scanf("%d", &cols2);
+                    
+                        if (cols1 != rows2) {
+                            printf("Matrix multiplication is not possible. Number of columns in the first matrix must be equal to the number of rows in the second matrix.\n");
+                            return 1;
+                        }
+                    
+                        int matrix1[rows1][cols1], matrix2[rows2][cols2], product[rows1][cols2];
+                    
+                        printf("Enter elements of the first matrix:\n");
+                        for (int i = 0; i < rows1; i++) {
+                            for (int j = 0; j < cols1; j++) {
+                                printf("Enter element at row %d, column %d: ", i + 1, j + 1);
+                                scanf("%d", &matrix1[i][j]);
+                            }
+                        }
+                    
+                        printf("Enter elements of the second matrix:\n");
+                        for (int i = 0; i < rows2; i++) {
+                            for (int j = 0; j < cols2; j++) {
+                                printf("Enter element at row %d, column %d: ", i + 1, j + 1);
+                                scanf("%d", &matrix2[i][j]);
+                            }
+                        }
+                    
+                        // Multiplying the matrices
+                        for (int i = 0; i < rows1; i++) {
+                            for (int j = 0; j < cols2; j++) {
+                                product[i][j] = 0;
+                                for (int k = 0; k < cols1; k++) {
+                                    product[i][j] += matrix1[i][k] * matrix2[k][j];
+                                }
+                            }
+                        }
+                    
+                        // Displaying the result
+                        printf("Resultant matrix after multiplication:\n");
+                        for (int i = 0; i < rows1; i++) {
+                            for (int j = 0; j < cols2; j++) {
+                                printf("%d ", product[i][j]);
+                            }
+                            printf("\n");
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of rows for the first matrix: 1
+                Enter the number of columns for the first matrix: 2
+                Enter the number of rows for the second matrix: 2
+                Enter the number of columns for the second matrix: 1
+                Enter elements of the first matrix:
+                Enter element at row 1, column 1: 4
+                Enter element at row 1, column 2: 5
+                Enter elements of the second matrix:
+                Enter element at row 1, column 1: 7
+                Enter element at row 2, column 1: 5
+                Resultant matrix after multiplication:
+                53 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>5.  Enter a Matrix from user, copy it in another matrix of same size?</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    int main() {
+                        int rows, cols;
+                    
+                        printf("Enter the number of rows: ");
+                        scanf("%d", &rows);
+                    
+                        printf("Enter the number of columns: ");
+                        scanf("%d", &cols);
+                    
+                        int originalMatrix[rows][cols], copiedMatrix[rows][cols];
+                    
+                        printf("Enter elements of the original matrix:\n");
+                        for (int i = 0; i < rows; i++) {
+                            for (int j = 0; j < cols; j++) {
+                                printf("Enter element at row %d, column %d: ", i + 1, j + 1);
+                                scanf("%d", &originalMatrix[i][j]);
+                            }
+                        }
+                    
+                        // Copying the matrix
+                        for (int i = 0; i < rows; i++) {
+                            for (int j = 0; j < cols; j++) {
+                                copiedMatrix[i][j] = originalMatrix[i][j];
+                            }
+                        }
+                    
+                        // Displaying the copied matrix
+                        printf("Copied matrix of the same size:\n");
+                        for (int i = 0; i < rows; i++) {
+                            for (int j = 0; j < cols; j++) {
+                                printf("%d ", copiedMatrix[i][j]);
+                            }
+                            printf("\n");
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of rows: 2
+                Enter the number of columns: 3
+                Enter elements of the original matrix:
+                Enter element at row 1, column 1: 4
+                Enter element at row 1, column 2: 8
+                Enter element at row 1, column 3: 7
+                Enter element at row 2, column 1: 6
+                Enter element at row 2, column 2: 5
+                Enter element at row 2, column 3: 4
+                Copied matrix of the same size:
+                4 8 7 
+                6 5 4 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>6.  Enter the Matrix from user, multiply it with a scalar value and display the answer?</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    int main() {
+                        int rows, cols;
+                        double scalar;
+                    
+                        printf("Enter the number of rows: ");
+                        scanf("%d", &rows);
+                    
+                        printf("Enter the number of columns: ");
+                        scanf("%d", &cols);
+                    
+                        double matrix[rows][cols];
+                    
+                        // Input matrix elements from the user
+                        printf("Enter elements of the matrix:\n");
+                        for (int i = 0; i < rows; i++) {
+                            for (int j = 0; j < cols; j++) {
+                                printf("Enter element at row %d, column %d: ", i + 1, j + 1);
+                                scanf("%lf", &matrix[i][j]);
+                            }
+                        }
+                    
+                        printf("Enter the scalar value to multiply the matrix by: ");
+                        scanf("%lf", &scalar);
+                    
+                        // Multiply the matrix by the scalar
+                        for (int i = 0; i < rows; i++) {
+                            for (int j = 0; j < cols; j++) {
+                                matrix[i][j] *= scalar;
+                            }
+                        }
+                    
+                        // Display the result
+                        printf("Resultant matrix after multiplying by %.2lf:\n", scalar);
+                        for (int i = 0; i < rows; i++) {
+                            for (int j = 0; j < cols; j++) {
+                                printf("%.2lf ", matrix[i][j]);
+                            }
+                            printf("\n");
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of rows: 2
+                Enter the number of columns: 1
+                Enter elements of the matrix:
+                Enter element at row 1, column 1: 33
+                Enter element at row 2, column 1: 4
+                Enter the scalar value to multiply the matrix by: 10
+                Resultant matrix after multiplying by 10.00:
+                330.00 
+                40.00 
+            </code></pre>
+        </section>
+        </div>
+    </body>
+</html>

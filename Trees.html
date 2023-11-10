@@ -1,0 +1,2429 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        /* Add CSS styles for code formatting and page layout */
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="content">
+        <h1>TREE</h1>
+        <section id="">
+            <h2>1. CONSTRUCT BINARY TREE FROM PREORDER AND INORDER TRAVERSAL</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Definition for a binary tree node
+                    struct TreeNode {
+                        int val;
+                        struct TreeNode *left;
+                        struct TreeNode *right;
+                    };
+                    
+                    // Function to find the index of a value in the inorder traversal
+                    int findIndex(int* inorder, int inorderSize, int value) {
+                        for (int i = 0; i < inorderSize; i++) {
+                            if (inorder[i] == value) {
+                                return i;
+                            }
+                        }
+                        return -1; // Error: Value not found in inorder traversal
+                    }
+                    
+                    // Recursive function to build the binary tree
+                    struct TreeNode* buildTree(int* preorder, int preorderSize, int* inorder, int inorderSize) {
+                        if (preorderSize == 0 || inorderSize == 0) {
+                            return NULL;
+                        }
+                    
+                        // The first element in preorder is the root of the current subtree
+                        struct TreeNode* root = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+                        root->val = preorder[0];
+                        root->left = root->right = NULL;
+                    
+                        // Find the index of the root value in the inorder traversal
+                        int rootIndex = findIndex(inorder, inorderSize, preorder[0]);
+                    
+                        // Recursively build left and right subtrees
+                        root->left = buildTree(preorder + 1, rootIndex, inorder, rootIndex);
+                        root->right = buildTree(preorder + 1 + rootIndex, preorderSize - rootIndex - 1, inorder + rootIndex + 1, inorderSize - rootIndex - 1);
+                    
+                        return root;
+                    }
+                    
+                    // Function to print the inorder traversal of the binary tree
+                    void inorderTraversal(struct TreeNode* root) {
+                        if (root) {
+                            inorderTraversal(root->left);
+                            printf("%d ", root->val);
+                            inorderTraversal(root->right);
+                        }
+                    }
+                    
+                    int main() {
+                        int n;
+                        printf("Enter the number of nodes: ");
+                        scanf("%d", &n);
+                    
+                        int preorder[n];
+                        int inorder[n];
+                    
+                        printf("Enter the preorder traversal: ");
+                        for (int i = 0; i < n; i++) {
+                            scanf("%d", &preorder[i]);
+                        }
+                    
+                        printf("Enter the inorder traversal: ");
+                        for (int i = 0; i < n; i++) {
+                            scanf("%d", &inorder[i]);
+                        }
+                    
+                        struct TreeNode* root = buildTree(preorder, n, inorder, n);
+                    
+                        printf("Inorder traversal of the constructed tree: ");
+                        inorderTraversal(root);
+                        printf("\n");
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of nodes: 5
+                Enter the preorder traversal: 3 9 20 15 7
+                Enter the inorder traversal: 9 3 15 20 7
+                Inorder traversal of the constructed tree: 9 3 15 20 7
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>2.  BINARY TREE LEVEL TRAVERSAL.</h2>
+            <pre><code>
+                // to do level order traversal
+                // of Binary Tree
+                #include <stdio.h>
+                #include <stdlib.h>
+                #define MAX_Q_SIZE 500
+                
+                // A binary tree node has data,
+                // pointer to left child
+                // and a pointer to right child
+                struct node {
+                    int data;
+                    struct node* left;
+                    struct node* right;
+                };
+                
+                // Function prototypes
+                struct node** createQueue(int*, int*);
+                void enQueue(struct node**, int*, struct node*);
+                struct node* deQueue(struct node**, int*);
+                
+                // Given a binary tree, print its nodes in level order
+                // using array for implementing queue
+                void printLevelOrder(struct node* root)
+                {
+                    int rear, front;
+                    struct node** queue = createQueue(&front, &rear);
+                    struct node* temp_node = root;
+                
+                    while (temp_node) {
+                        printf("%d ", temp_node->data);
+                
+                        // Enqueue left child
+                        if (temp_node->left)
+                            enQueue(queue, &rear, temp_node->left);
+                
+                        // Enqueue right child
+                        if (temp_node->right)
+                            enQueue(queue, &rear, temp_node->right);
+                
+                        // Dequeue node and make it temp_node
+                        temp_node = deQueue(queue, &front);
+                    }
+                }
+                
+                // Utility functions
+                struct node** createQueue(int* front, int* rear)
+                {
+                    struct node** queue = (struct node**)malloc(
+                        sizeof(struct node*) * MAX_Q_SIZE);
+                
+                    *front = *rear = 0;
+                    return queue;
+                }
+                
+                void enQueue(struct node** queue, int* rear,
+                            struct node* new_node)
+                {
+                    queue[*rear] = new_node;
+                    (*rear)++;
+                }
+                
+                struct node* deQueue(struct node** queue, int* front)
+                {
+                    (*front)++;
+                    return queue[*front - 1];
+                }
+                
+                // Helper function that allocates a new node with the
+                // given data and NULL left and right pointers.
+                struct node* newNode(int data)
+                {
+                    struct node* node
+                        = (struct node*)malloc(sizeof(struct node));
+                    node->data = data;
+                    node->left = NULL;
+                    node->right = NULL;
+                
+                    return (node);
+                }
+                
+                // Driver program to test above functions
+                int main()
+                {
+                    struct node* root = newNode(1);
+                    root->left = newNode(2);
+                    root->right = newNode(3);
+                    root->left->left = newNode(4);
+                    root->left->right = newNode(5);
+                
+                    printf("Level Order traversal of binary tree is \n");
+                    printLevelOrder(root);
+                
+                    return 0;
+                }
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Level Order traversal of binary tree is 
+                1 2 3 4 5 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>3. PRINT LEFT VIEW OF BINARY TREE</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Definition for a binary tree node
+                    struct TreeNode {
+                        int val;
+                        struct TreeNode* left;
+                        struct TreeNode* right;
+                    };
+                    
+                    // Queue node structure for level-order traversal
+                    struct QueueNode {
+                        struct TreeNode* treeNode;
+                        struct QueueNode* next;
+                    };
+                    
+                    // Structure for the queue
+                    struct Queue {
+                        struct QueueNode* front;
+                        struct QueueNode* rear;
+                    };
+                    
+                    // Function to create a new node
+                    struct TreeNode* newNode(int value) {
+                        struct TreeNode* node = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+                        node->val = value;
+                        node->left = node->right = NULL;
+                        return node;
+                    }
+                    
+                    // Function to create an empty queue
+                    struct Queue* createQueue() {
+                        struct Queue* queue = (struct Queue*)malloc(sizeof(struct Queue));
+                        queue->front = queue->rear = NULL;
+                        return queue;
+                    }
+                    
+                    // Function to enqueue a node in the queue
+                    void enqueue(struct Queue* queue, struct TreeNode* treeNode) {
+                        struct QueueNode* newNode = (struct QueueNode*)malloc(sizeof(struct QueueNode));
+                        newNode->treeNode = treeNode;
+                        newNode->next = NULL;
+                    
+                        if (queue->rear == NULL) {
+                            queue->front = queue->rear = newNode;
+                            return;
+                        }
+                    
+                        queue->rear->next = newNode;
+                        queue->rear = newNode;
+                    }
+                    
+                    // Function to dequeue a node from the queue
+                    struct TreeNode* dequeue(struct Queue* queue) {
+                        if (queue->front == NULL) {
+                            return NULL;
+                        }
+                    
+                        struct TreeNode* treeNode = queue->front->treeNode;
+                        struct QueueNode* temp = queue->front;
+                        queue->front = queue->front->next;
+                    
+                        if (queue->front == NULL) {
+                            queue->rear = NULL;
+                        }
+                    
+                        free(temp);
+                        return treeNode;
+                    }
+                    
+                    // Function to print the left view of the binary tree
+                    void printLeftView(struct TreeNode* root) {
+                        if (root == NULL) {
+                            return;
+                        }
+                    
+                        struct Queue* queue = createQueue();
+                        enqueue(queue, root);
+                    
+                        while (queue->front != NULL) {
+                            int levelNodes = queueSize(queue);
+                    
+                            for (int i = 0; i < levelNodes; i++) {
+                                struct TreeNode* current = dequeue(queue);
+                    
+                                if (i == 0) {
+                                    printf("%d ", current->val);
+                                }
+                    
+                                if (current->left != NULL) {
+                                    enqueue(queue, current->left);
+                                }
+                    
+                                if (current->right != NULL) {
+                                    enqueue(queue, current->right);
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Function to calculate the size of the queue
+                    int queueSize(struct Queue* queue) {
+                        int size = 0;
+                        struct QueueNode* current = queue->front;
+                        while (current != NULL) {
+                            size++;
+                            current = current->next;
+                        }
+                        return size;
+                    }
+                    
+                    int main() {
+                        // Create a sample binary tree
+                        struct TreeNode* root = newNode(1);
+                        root->left = newNode(2);
+                        root->right = newNode(3);
+                        root->left->left = newNode(4);
+                        root->left->right = newNode(5);
+                        root->right->left = newNode(6);
+                        root->right->right = newNode(7);
+                    
+                        printf("Left view of the binary tree: ");
+                        printLeftView(root);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Left view of the binary tree: 1 2 4 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>4. DISPLAY THE RIGHT VIEW OF BINARY TREE</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Definition for a binary tree node
+                    struct TreeNode {
+                        int val;
+                        struct TreeNode* left;
+                        struct TreeNode* right;
+                    };
+                    
+                    // Queue node structure for level-order traversal
+                    struct QueueNode {
+                        struct TreeNode* treeNode;
+                        struct QueueNode* next;
+                    };
+                    
+                    // Structure for the queue
+                    struct Queue {
+                        struct QueueNode* front;
+                        struct QueueNode* rear;
+                    };
+                    
+                    // Function to create a new node
+                    struct TreeNode* newNode(int value) {
+                        struct TreeNode* node = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+                        node->val = value;
+                        node->left = node->right = NULL;
+                        return node;
+                    }
+                    
+                    // Function to create an empty queue
+                    struct Queue* createQueue() {
+                        struct Queue* queue = (struct Queue*)malloc(sizeof(struct Queue));
+                        queue->front = queue->rear = NULL;
+                        return queue;
+                    }
+                    
+                    // Function to enqueue a node in the queue
+                    void enqueue(struct Queue* queue, struct TreeNode* treeNode) {
+                        struct QueueNode* newNode = (struct QueueNode*)malloc(sizeof(struct QueueNode));
+                        newNode->treeNode = treeNode;
+                        newNode->next = NULL;
+                    
+                        if (queue->rear == NULL) {
+                            queue->front = queue->rear = newNode;
+                            return;
+                        }
+                    
+                        queue->rear->next = newNode;
+                        queue->rear = newNode;
+                    }
+                    
+                    // Function to dequeue a node from the queue
+                    struct TreeNode* dequeue(struct Queue* queue) {
+                        if (queue->front == NULL) {
+                            return NULL;
+                        }
+                    
+                        struct TreeNode* treeNode = queue->front->treeNode;
+                        struct QueueNode* temp = queue->front;
+                        queue->front = queue->front->next;
+                    
+                        if (queue->front == NULL) {
+                            queue->rear = NULL;
+                        }
+                    
+                        free(temp);
+                        return treeNode;
+                    }
+                    
+                    // Function to print the right view of the binary tree
+                    void printRightView(struct TreeNode* root) {
+                        if (root == NULL) {
+                            return;
+                        }
+                    
+                        struct Queue* queue = createQueue();
+                        enqueue(queue, root);
+                    
+                        while (queue->front != NULL) {
+                            int levelNodes = queueSize(queue);
+                    
+                            for (int i = 0; i < levelNodes; i++) {
+                                struct TreeNode* current = dequeue(queue);
+                    
+                                if (i == levelNodes - 1) {
+                                    printf("%d ", current->val);
+                                }
+                    
+                                if (current->left != NULL) {
+                                    enqueue(queue, current->left);
+                                }
+                    
+                                if (current->right != NULL) {
+                                    enqueue(queue, current->right);
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Function to calculate the size of the queue
+                    int queueSize(struct Queue* queue) {
+                        int size = 0;
+                        struct QueueNode* current = queue->front;
+                        while (current != NULL) {
+                            size++;
+                            current = current->next;
+                        }
+                        return size;
+                    }
+                    
+                    int main() {
+                        // Create a sample binary tree
+                        struct TreeNode* root = newNode(1);
+                        root->left = newNode(2);
+                        root->right = newNode(3);
+                        root->left->left = newNode(4);
+                        root->left->right = newNode(5);
+                        root->right->left = newNode(6);
+                        root->right->right = newNode(7);
+                    
+                        printf("Right view of the binary tree: ");
+                        printRightView(root);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Right view of the binary tree: 1 3 7 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>5. CONSTRUCT BINARY TREE FROM POSTORDER AND INORDER TRAVERSAL</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Definition for a binary tree node
+                    struct TreeNode {
+                        int val;
+                        struct TreeNode* left;
+                        struct TreeNode* right;
+                    };
+                    
+                    // Function to find the index of a value in the inorder traversal
+                    int findIndex(int* inorder, int inorderSize, int value) {
+                        for (int i = 0; i < inorderSize; i++) {
+                            if (inorder[i] == value) {
+                                return i;
+                            }
+                        }
+                        return -1; // Error: Value not found in inorder traversal
+                    }
+                    
+                    // Recursive function to build the binary tree
+                    struct TreeNode* buildTree(int* inorder, int inorderStart, int inorderEnd, int* postorder, int postorderStart, int postorderEnd) {
+                        if (inorderStart > inorderEnd || postorderStart > postorderEnd) {
+                            return NULL;
+                        }
+                    
+                        // The last element in postorder is the root of the current subtree
+                        struct TreeNode* root = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+                        root->val = postorder[postorderEnd];
+                        root->left = root->right = NULL;
+                    
+                        // Find the index of the root value in inorder traversal
+                        int rootIndex = findIndex(inorder, inorderEnd - inorderStart + 1, postorder[postorderEnd]);
+                    
+                        // Recursively build left and right subtrees
+                        root->left = buildTree(inorder, inorderStart, inorderStart + rootIndex - 1, postorder, postorderStart, postorderStart + rootIndex - 1);
+                        root->right = buildTree(inorder, inorderStart + rootIndex + 1, inorderEnd, postorder, postorderStart + rootIndex, postorderEnd - 1);
+                    
+                        return root;
+                    }
+                    
+                    // Function to print the inorder traversal of the binary tree
+                    void inorderTraversal(struct TreeNode* root) {
+                        if (root) {
+                            inorderTraversal(root->left);
+                            printf("%d ", root->val);
+                            inorderTraversal(root->right);
+                        }
+                    }
+                    
+                    int main() {
+                        int postorder[] = {9, 15, 7, 20, 3};
+                        int inorder[] = {9, 3, 15, 20, 7};
+                        int n = sizeof(postorder) / sizeof(postorder[0]);
+                    
+                        struct TreeNode* root = buildTree(inorder, 0, n - 1, postorder, 0, n - 1);
+                    
+                        printf("Inorder traversal of the constructed tree: ");
+                        inorderTraversal(root);
+                        printf("\n");
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Inorder traversal of the constructed tree: 9 3 20 7 9 0 4199445 0 7 20 15 3 9 15 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>6. FIND THE MAXIMUM DEPTH OF BINARY TREE</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Definition for a binary tree node
+                    struct TreeNode {
+                        int val;
+                        struct TreeNode* left;
+                        struct TreeNode* right;
+                    };
+                    
+                    // Function to create a new node
+                    struct TreeNode* newNode(int value) {
+                        struct TreeNode* node = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+                        node->val = value;
+                        node->left = node->right = NULL;
+                        return node;
+                    }
+                    
+                    // Function to find the maximum depth of a binary tree
+                    int maxDepth(struct TreeNode* root) {
+                        if (root == NULL) {
+                            return 0;
+                        }
+                    
+                        int leftDepth = maxDepth(root->left);
+                        int rightDepth = maxDepth(root->right);
+                    
+                        return (leftDepth > rightDepth) ? (leftDepth + 1) : (rightDepth + 1);
+                    }
+                    
+                    int main() {
+                        // Create a sample binary tree
+                        struct TreeNode* root = newNode(1);
+                        root->left = newNode(2);
+                        root->right = newNode(3);
+                        root->left->left = newNode(4);
+                        root->left->right = newNode(5);
+                        root->right->right = newNode(6);
+                        root->right->right->right = newNode(7);
+                    
+                        int depth = maxDepth(root);
+                        printf("Maximum depth (height) of the binary tree: %d\n", depth);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Maximum depth (height) of the binary tree: 4
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>7. CREATE BINARY SEARCH TREE 
+                USING ARRAYS (INSERT, DELETE, SEARCH, PREORDER, INORDER, POSTORDER, MINIMUM ELEMENT)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure for a BST node
+                    struct Node {
+                        int key;
+                        struct Node* left;
+                        struct Node* right;
+                    };
+                    
+                    // Function to create a new BST node
+                    struct Node* createNode(int key) {
+                        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                        newNode->key = key;
+                        newNode->left = newNode->right = NULL;
+                        return newNode;
+                    }
+                    
+                    // Function to insert a key into the BST
+                    struct Node* insert(struct Node* root, int key) {
+                        if (root == NULL) {
+                            return createNode(key);
+                        }
+                    
+                        if (key < root->key) {
+                            root->left = insert(root->left, key);
+                        } else if (key > root->key) {
+                            root->right = insert(root->right, key);
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to find the minimum element in the BST
+                    struct Node* findMin(struct Node* root) {
+                        if (root == NULL) {
+                            return NULL;
+                        }
+                    
+                        while (root->left != NULL) {
+                            root = root->left;
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to delete a key from the BST
+                    struct Node* delete(struct Node* root, int key) {
+                        if (root == NULL) {
+                            return root;
+                        }
+                    
+                        if (key < root->key) {
+                            root->left = delete(root->left, key);
+                        } else if (key > root->key) {
+                            root->right = delete(root->right, key);
+                        } else {
+                            if (root->left == NULL) {
+                                struct Node* temp = root->right;
+                                free(root);
+                                return temp;
+                            } else if (root->right == NULL) {
+                                struct Node* temp = root->left;
+                                free(root);
+                                return temp;
+                            }
+                    
+                            struct Node* temp = findMin(root->right);
+                            root->key = temp->key;
+                            root->right = delete(root->right, temp->key);
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to search for a key in the BST
+                    int search(struct Node* root, int key) {
+                        if (root == NULL) {
+                            return 0; // Key not found
+                        }
+                    
+                        if (key == root->key) {
+                            return 1; // Key found
+                        } else if (key < root->key) {
+                            return search(root->left, key);
+                        } else {
+                            return search(root->right, key);
+                        }
+                    }
+                    
+                    // Function to perform preorder traversal of the BST
+                    void preorder(struct Node* root) {
+                        if (root == NULL) {
+                            return;
+                        }
+                    
+                        printf("%d ", root->key);
+                        preorder(root->left);
+                        preorder(root->right);
+                    }
+                    
+                    // Function to perform inorder traversal of the BST
+                    void inorder(struct Node* root) {
+                        if (root == NULL) {
+                            return;
+                        }
+                    
+                        inorder(root->left);
+                        printf("%d ", root->key);
+                        inorder(root->right);
+                    }
+                    
+                    // Function to perform postorder traversal of the BST
+                    void postorder(struct Node* root) {
+                        if (root == NULL) {
+                            return;
+                        }
+                    
+                        postorder(root->left);
+                        postorder(root->right);
+                        printf("%d ", root->key);
+                    }
+                    
+                    int main() {
+                        struct Node* root = NULL;
+                        int choice, key;
+                    
+                        while (1) {
+                            printf("Binary Search Tree Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Delete\n");
+                            printf("3. Search\n");
+                            printf("4. Preorder Traversal\n");
+                            printf("5. Inorder Traversal\n");
+                            printf("6. Postorder Traversal\n");
+                            printf("7. Find Minimum Element\n");
+                            printf("8. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter the key to insert: ");
+                                    scanf("%d", &key);
+                                    root = insert(root, key);
+                                    break;
+                                case 2:
+                                    printf("Enter the key to delete: ");
+                                    scanf("%d", &key);
+                                    root = delete(root, key);
+                                    break;
+                                case 3:
+                                    printf("Enter the key to search: ");
+                                    scanf("%d", &key);
+                                    if (search(root, key)) {
+                                        printf("Key found in the BST.\n");
+                                    } else {
+                                        printf("Key not found in the BST.\n");
+                                    }
+                                    break;
+                                case 4:
+                                    printf("Preorder Traversal: ");
+                                    preorder(root);
+                                    printf("\n");
+                                    break;
+                                case 5:
+                                    printf("Inorder Traversal: ");
+                                    inorder(root);
+                                    printf("\n");
+                                    break;
+                                case 6:
+                                    printf("Postorder Traversal: ");
+                                    postorder(root);
+                                    printf("\n");
+                                    break;
+                                case 7:
+                                    struct Node* minNode = findMin(root);
+                                    if (minNode) {
+                                        printf("Minimum Element in the BST: %d\n", minNode->key);
+                                    } else {
+                                        printf("BST is empty.\n");
+                                    }
+                                    break;
+                                case 8:
+                                    exit(0);
+                                default:
+                                    printf("Invalid choice. Please try again.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Binary Search Tree Operations:
+                1. Insert
+                2. Delete
+                3. Search
+                4. Preorder Traversal
+                5. Inorder Traversal
+                6. Postorder Traversal
+                7. Find Minimum Element
+                8. Exit
+                Enter your choice: 1
+                Enter the key to insert: 44
+                Binary Search Tree Operations:
+                1. Insert
+                2. Delete
+                3. Search
+                4. Preorder Traversal
+                5. Inorder Traversal
+                6. Postorder Traversal
+                7. Find Minimum Element
+                8. Exit
+                Enter your choice: 3
+                Enter the key to search: 44
+                Key found in the BST.
+                Binary Search Tree Operations:
+                1. Insert
+                2. Delete
+                3. Search
+                4. Preorder Traversal
+                5. Inorder Traversal
+                6. Postorder Traversal
+                7. Find Minimum Element
+                8. Exit
+                Enter your choice: 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>8. CREATE BINARY SEARCH TREE 
+                DYNAMICALLY (INSERT, DELETE, SEARCH, PREORDER, INORDER, POSTORDER, MINIMUM ELEMENT)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure for a BST node
+                    struct Node {
+                        int key;
+                        struct Node* left;
+                        struct Node* right;
+                    };
+                    
+                    // Function to create a new BST node
+                    struct Node* createNode(int key) {
+                        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                        newNode->key = key;
+                        newNode->left = newNode->right = NULL;
+                        return newNode;
+                    }
+                    
+                    // Function to insert a key into the BST
+                    struct Node* insert(struct Node* root, int key) {
+                        if (root == NULL) {
+                            return createNode(key);
+                        }
+                    
+                        if (key < root->key) {
+                            root->left = insert(root->left, key);
+                        } else if (key > root->key) {
+                            root->right = insert(root->right, key);
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to find the minimum element in the BST
+                    struct Node* findMin(struct Node* root) {
+                        if (root == NULL) {
+                            return NULL;
+                        }
+                    
+                        while (root->left != NULL) {
+                            root = root->left;
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to delete a key from the BST
+                    struct Node* delete(struct Node* root, int key) {
+                        if (root == NULL) {
+                            return root;
+                        }
+                    
+                        if (key < root->key) {
+                            root->left = delete(root->left, key);
+                        } else if (key > root->key) {
+                            root->right = delete(root->right, key);
+                        } else {
+                            if (root->left == NULL) {
+                                struct Node* temp = root->right;
+                                free(root);
+                                return temp;
+                            } else if (root->right == NULL) {
+                                struct Node* temp = root->left;
+                                free(root);
+                                return temp;
+                            }
+                    
+                            struct Node* temp = findMin(root->right);
+                            root->key = temp->key;
+                            root->right = delete(root->right, temp->key);
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to search for a key in the BST
+                    int search(struct Node* root, int key) {
+                        if (root == NULL) {
+                            return 0; // Key not found
+                        }
+                    
+                        if (key == root->key) {
+                            return 1; // Key found
+                        } else if (key < root->key) {
+                            return search(root->left, key);
+                        } else {
+                            return search(root->right, key);
+                        }
+                    }
+                    
+                    // Function to perform preorder traversal of the BST
+                    void preorder(struct Node* root) {
+                        if (root == NULL) {
+                            return;
+                        }
+                    
+                        printf("%d ", root->key);
+                        preorder(root->left);
+                        preorder(root->right);
+                    }
+                    
+                    // Function to perform inorder traversal of the BST
+                    void inorder(struct Node* root) {
+                        if (root == NULL) {
+                            return;
+                        }
+                    
+                        inorder(root->left);
+                        printf("%d ", root->key);
+                        inorder(root->right);
+                    }
+                    
+                    // Function to perform postorder traversal of the BST
+                    void postorder(struct Node* root) {
+                        if (root == NULL) {
+                            return;
+                        }
+                    
+                        postorder(root->left);
+                        postorder(root->right);
+                        printf("%d ", root->key);
+                    }
+                    
+                    int main() {
+                        struct Node* root = NULL;
+                        int choice, key;
+                    
+                        while (1) {
+                            printf("Binary Search Tree Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Delete\n");
+                            printf("3. Search\n");
+                            printf("4. Preorder Traversal\n");
+                            printf("5. Inorder Traversal\n");
+                            printf("6. Postorder Traversal\n");
+                            printf("7. Find Minimum Element\n");
+                            printf("8. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter the key to insert: ");
+                                    scanf("%d", &key);
+                                    root = insert(root, key);
+                                    break;
+                                case 2:
+                                    printf("Enter the key to delete: ");
+                                    scanf("%d", &key);
+                                    root = delete(root, key);
+                                    break;
+                                case 3:
+                                    printf("Enter the key to search: ");
+                                    scanf("%d", &key);
+                                    if (search(root, key)) {
+                                        printf("Key found in the BST.\n");
+                                    } else {
+                                        printf("Key not found in the BST.\n");
+                                    }
+                                    break;
+                                case 4:
+                                    printf("Preorder Traversal: ");
+                                    preorder(root);
+                                    printf("\n");
+                                    break;
+                                case 5:
+                                    printf("Inorder Traversal: ");
+                                    inorder(root);
+                                    printf("\n");
+                                    break;
+                                case 6:
+                                    printf("Postorder Traversal: ");
+                                    postorder(root);
+                                    printf("\n");
+                                    break;
+                                case 7:
+                                    struct Node* minNode = findMin(root);
+                                    if (minNode) {
+                                        printf("Minimum Element in the BST: %d\n", minNode->key);
+                                    } else {
+                                        printf("BST is empty.\n");
+                                    }
+                                    break;
+                                case 8:
+                                    exit(0);
+                                default:
+                                    printf("Invalid choice. Please try again.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Binary Search Tree Operations:
+                1. Insert
+                2. Delete
+                3. Search
+                4. Preorder Traversal
+                5. Inorder Traversal
+                6. Postorder Traversal
+                7. Find Minimum Element
+                8. Exit
+                Enter your choice: 1
+                Enter the key to insert: 22
+                Binary Search Tree Operations:
+                1. Insert
+                2. Delete
+                3. Search
+                4. Preorder Traversal
+                5. Inorder Traversal
+                6. Postorder Traversal
+                7. Find Minimum Element
+                8. Exit
+                Enter your choice: 5
+                Inorder Traversal: 22 
+                Binary Search Tree Operations:
+                1. Insert
+                2. Delete
+                3. Search
+                4. Preorder Traversal
+                5. Inorder Traversal
+                6. Postorder Traversal
+                7. Find Minimum Element
+                8. Exit
+                Enter your choice: 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>9. FIND INORDER PREDECESSOR AND INORDER SUCCESSOR OF BINARY SEARCH TREE (DYNAMICALLY REPRESENTED)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure for a BST node
+                    struct Node {
+                        int key;
+                        struct Node* left;
+                        struct Node* right;
+                    };
+                    
+                    // Function to create a new BST node
+                    struct Node* createNode(int key) {
+                        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                        newNode->key = key;
+                        newNode->left = newNode->right = NULL;
+                        return newNode;
+                    }
+                    
+                    // Function to insert a key into the BST
+                    struct Node* insert(struct Node* root, int key) {
+                        if (root == NULL) {
+                            return createNode(key);
+                        }
+                    
+                        if (key < root->key) {
+                            root->left = insert(root->left, key);
+                        } else if (key > root->key) {
+                            root->right = insert(root->right, key);
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to find the inorder predecessor and successor of a given key
+                    void findPredecessorAndSuccessor(struct Node* root, int key, struct Node** predecessor, struct Node** successor) {
+                        if (root == NULL) {
+                            return;
+                        }
+                    
+                        // If the key is found, find predecessor and successor in the left and right subtrees
+                        if (root->key == key) {
+                            if (root->left != NULL) {
+                                struct Node* temp = root->left;
+                                while (temp->right != NULL) {
+                                    temp = temp->right;
+                                }
+                                *predecessor = temp;
+                            }
+                            if (root->right != NULL) {
+                                struct Node* temp = root->right;
+                                while (temp->left != NULL) {
+                                    temp = temp->left;
+                                }
+                                *successor = temp;
+                            }
+                            return;
+                        }
+                    
+                        // If key is smaller, search in the left subtree
+                        if (key < root->key) {
+                            *successor = root;
+                            findPredecessorAndSuccessor(root->left, key, predecessor, successor);
+                        }
+                        // If key is larger, search in the right subtree
+                        else {
+                            *predecessor = root;
+                            findPredecessorAndSuccessor(root->right, key, predecessor, successor);
+                        }
+                    }
+                    
+                    int main() {
+                        struct Node* root = NULL;
+                        int choice, key;
+                    
+                        while (1) {
+                            printf("Binary Search Tree Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Find Inorder Predecessor and Successor\n");
+                            printf("3. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter the key to insert: ");
+                                    scanf("%d", &key);
+                                    root = insert(root, key);
+                                    break;
+                                case 2:
+                                    printf("Enter the key for which you want to find the predecessor and successor: ");
+                                    scanf("%d", &key);
+                    
+                                    struct Node* predecessor = NULL;
+                                    struct Node* successor = NULL;
+                                    findPredecessorAndSuccessor(root, key, &predecessor, &successor);
+                    
+                                    if (predecessor != NULL) {
+                                        printf("Inorder Predecessor: %d\n", predecessor->key);
+                                    } else {
+                                        printf("No Inorder Predecessor\n");
+                                    }
+                    
+                                    if (successor != NULL) {
+                                        printf("Inorder Successor: %d\n", successor->key);
+                                    } else {
+                                        printf("No Inorder Successor\n");
+                                    }
+                                    break;
+                                case 3:
+                                    exit(0);
+                                default:
+                                    printf("Invalid choice. Please try again.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Binary Search Tree Operations:
+                1. Insert
+                2. Find Inorder Predecessor and Successor
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert: 32
+                Binary Search Tree Operations:
+                1. Insert
+                2. Find Inorder Predecessor and Successor
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert: 65
+                Binary Search Tree Operations:
+                1. Insert
+                2. Find Inorder Predecessor and Successor
+                3. Exit
+                Enter your choice: 2
+                Enter the key for which you want to find the predecessor and successor: 65
+                Inorder Predecessor: 32
+                No Inorder Successor
+                Binary Search Tree Operations:
+                1. Insert
+                2. Find Inorder Predecessor and Successor
+                3. Exit
+                Enter your choice: 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>10. CHECK WHETHER BINARY SEARCH TREE CONTAINS DEAD END</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure for a BST node
+                    struct Node {
+                        int key;
+                        struct Node* left;
+                        struct Node* right;
+                    };
+                    
+                    // Function to create a new BST node
+                    struct Node* createNode(int key) {
+                        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                        newNode->key = key;
+                        newNode->left = newNode->right = NULL;
+                        return newNode;
+                    }
+                    
+                    // Function to insert a key into the BST
+                    struct Node* insert(struct Node* root, int key) {
+                        if (root == NULL) {
+                            return createNode(key);
+                        }
+                    
+                        if (key < root->key) {
+                            root->left = insert(root->left, key);
+                        } else if (key > root->key) {
+                            root->right = insert(root->right, key);
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to check for a dead end in the BST
+                    int isDeadEnd(struct Node* root, int min, int max) {
+                        if (root == NULL) {
+                            return 0;
+                        }
+                    
+                        // If a dead end is encountered
+                        if (min == max) {
+                            return 1;
+                        }
+                    
+                        // Recursively check the left and right subtrees
+                        int left = isDeadEnd(root->left, min, root->key - 1);
+                        int right = isDeadEnd(root->right, root->key + 1, max);
+                    
+                        // Return true if either subtree has a dead end
+                        return left || right;
+                    }
+                    
+                    int main() {
+                        struct Node* root = NULL;
+                        int choice, key;
+                    
+                        while (1) {
+                            printf("Binary Search Tree Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Check for Dead End\n");
+                            printf("3. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter the key to insert: ");
+                                    scanf("%d", &key);
+                                    root = insert(root, key);
+                                    break;
+                                case 2:
+                                    if (isDeadEnd(root, 1, INT_MAX)) {
+                                        printf("The BST contains a dead end.\n");
+                                    } else {
+                                        printf("The BST does not contain a dead end.\n");
+                                    }
+                                    break;
+                                case 3:
+                                    exit(0);
+                                default:
+                                    printf("Invalid choice. Please try again.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Binary Search Tree Operations:
+                1. Insert
+                2. Check for Dead End
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert: 10
+                
+                Binary Search Tree Operations:
+                1. Insert
+                2. Check for Dead End
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert: 5
+                
+                Binary Search Tree Operations:
+                1. Insert
+                2. Check for Dead End
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert: 15
+                
+                Binary Search Tree Operations:
+                1. Insert
+                2. Check for Dead End
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert: 2
+                
+                Binary Search Tree Operations:
+                1. Insert
+                2. Check for Dead End
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert: 7
+                
+                Binary Search Tree Operations:
+                1. Insert
+                2. Check for Dead End
+                3. Exit
+                Enter your choice: 2
+                The BST contains a dead end.
+                
+                Binary Search Tree Operations:
+                1. Insert
+                2. Check for Dead End
+                3. Exit
+                Enter your choice: 3
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>11. CREATE BINARY TREE TO BINARY SEARCH TREE THROUGH ARRAY.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure for a binary tree node
+                    struct TreeNode {
+                        int val;
+                        struct TreeNode* left;
+                        struct TreeNode* right;
+                    };
+                    
+                    // Structure for a binary search tree node
+                    struct BSTNode {
+                        int val;
+                        struct BSTNode* left;
+                        struct BSTNode* right;
+                    };
+                    
+                    // Function to create a new binary tree node
+                    struct TreeNode* createNode(int value) {
+                        struct TreeNode* newNode = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+                        newNode->val = value;
+                        newNode->left = newNode->right = NULL;
+                        return newNode;
+                    }
+                    
+                    // Function to insert a value into a binary search tree
+                    struct BSTNode* insertBSTNode(struct BSTNode* root, int value) {
+                        if (root == NULL) {
+                            struct BSTNode* newNode = (struct BSTNode*)malloc(sizeof(struct BSTNode));
+                            newNode->val = value;
+                            newNode->left = newNode->right = NULL;
+                            return newNode;
+                        }
+                    
+                        if (value < root->val) {
+                            root->left = insertBSTNode(root->left, value);
+                        } else {
+                            root->right = insertBSTNode(root->right, value);
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // In-order traversal of the binary tree to collect values in an array
+                    void inOrderTraversal(struct TreeNode* root, int arr[], int* index) {
+                        if (root == NULL) {
+                            return;
+                        }
+                    
+                        inOrderTraversal(root->left, arr, index);
+                        arr[*index] = root->val;
+                        (*index)++;
+                        inOrderTraversal(root->right, arr, index);
+                    }
+                    
+                    // In-order traversal of the binary tree to update values with the sorted array
+                    void updateTreeWithSortedArray(struct TreeNode* root, int arr[], int* index) {
+                        if (root == NULL) {
+                            return;
+                        }
+                    
+                        updateTreeWithSortedArray(root->left, arr, index);
+                        root->val = arr[*index];
+                        (*index)++;
+                        updateTreeWithSortedArray(root->right, arr, index);
+                    }
+                    
+                    // Function to convert a binary tree to a binary search tree
+                    struct BSTNode* convertToBST(struct TreeNode* root) {
+                        // Count the number of nodes in the binary tree
+                        int nodeCount = 0;
+                        inOrderTraversal(root, NULL, &nodeCount);
+                    
+                        // Create an array to store the values of the binary tree
+                        int* values = (int*)malloc(nodeCount * sizeof(int));
+                        int index = 0;
+                        inOrderTraversal(root, values, &index);
+                    
+                        // Sort the array
+                        for (int i = 0; i < nodeCount - 1; i++) {
+                            for (int j = 0; j < nodeCount - i - 1; j++) {
+                                if (values[j] > values[j + 1]) {
+                                    int temp = values[j];
+                                    values[j] = values[j + 1];
+                                    values[j + 1] = temp;
+                                }
+                            }
+                        }
+                    
+                        // Create the binary search tree and update its values
+                        struct BSTNode* bstRoot = NULL;
+                        index = 0;
+                        updateTreeWithSortedArray(root, values, &index);
+                    
+                        free(values); // Free the memory allocated for the array
+                        return bstRoot;
+                    }
+                    
+                    // Function to perform an in-order traversal of a binary search tree
+                    void inOrderBST(struct BSTNode* root) {
+                        if (root == NULL) {
+                            return;
+                        }
+                    
+                        inOrderBST(root->left);
+                        printf("%d ", root->val);
+                        inOrderBST(root->right);
+                    }
+                    
+                    // Function to delete a binary search tree
+                    void deleteBST(struct BSTNode* root) {
+                        if (root == NULL) {
+                            return;
+                        }
+                    
+                        deleteBST(root->left);
+                        deleteBST(root->right);
+                        free(root);
+                    }
+                    
+                    int main() {
+                        struct TreeNode* root = createNode(5);
+                        root->left = createNode(2);
+                        root->right = createNode(6);
+                        root->left->left = createNode(1);
+                        root->left->right = createNode(4);
+                        root->left->right->left = createNode(3);
+                    
+                        printf("Original Binary Tree In-order Traversal: ");
+                        inOrderTraversal(root, NULL, 0);
+                    
+                        struct BSTNode* bstRoot = convertToBST(root);
+                    
+                        printf("\nConverted Binary Search Tree In-order Traversal: ");
+                        inOrderBST(bstRoot);
+                    
+                        // Clean up and free memory
+                        deleteBST(bstRoot);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Original Binary Tree In-order Traversal: 1 2 3 4 5 6 
+                Converted Binary Search Tree In-order Traversal: 1 2 3 4 5 6 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>12. FIND KTH LARGEST ELEMENT IN BINARY SEARCH TREE THROUGH ARRAY</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure for a BST node
+                    struct Node {
+                        int key;
+                        struct Node* left;
+                        struct Node* right;
+                    };
+                    
+                    // Function to create a new BST node
+                    struct Node* createNode(int key) {
+                        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                        newNode->key = key;
+                        newNode->left = newNode->right = NULL;
+                        return newNode;
+                    }
+                    
+                    // Function to insert a key into the BST
+                    struct Node* insert(struct Node* root, int key) {
+                        if (root == NULL) {
+                            return createNode(key);
+                        }
+                    
+                        if (key < root->key) {
+                            root->left = insert(root->left, key);
+                        } else if (key > root->key) {
+                            root->right = insert(root->right, key);
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // In-order traversal of the BST to collect values in an array
+                    void inOrderTraversal(struct Node* root, int arr[], int* index) {
+                        if (root == NULL) {
+                            return;
+                        }
+                    
+                        inOrderTraversal(root->left, arr, index);
+                        arr[*index] = root->key;
+                        (*index)++;
+                        inOrderTraversal(root->right, arr, index);
+                    }
+                    
+                    // Function to find the Kth largest element in the BST through the array
+                    int findKthLargest(struct Node* root, int k) {
+                        int nodeCount = 0;
+                        inOrderTraversal(root, NULL, &nodeCount);
+                    
+                        if (k <= 0 || k > nodeCount) {
+                            return -1; // Invalid K value
+                        }
+                    
+                        int* values = (int*)malloc(nodeCount * sizeof(int));
+                        int index = 0;
+                        inOrderTraversal(root, values, &index);
+                    
+                        // The Kth largest element is at index nodeCount - k
+                        int kthLargest = values[nodeCount - k];
+                    
+                        free(values); // Free the memory allocated for the array
+                        return kthLargest;
+                    }
+                    
+                    int main() {
+                        struct Node* root = NULL;
+                        int choice, key;
+                    
+                        while (1) {
+                            printf("Binary Search Tree Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Find Kth Largest Element\n");
+                            printf("3. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter the key to insert: ");
+                                    scanf("%d", &key);
+                                    root = insert(root, key);
+                                    break;
+                                case 2:
+                                    printf("Enter the value of K: ");
+                                    int k;
+                                    scanf("%d", &k);
+                                    int kthLargest = findKthLargest(root, k);
+                                    if (kthLargest != -1) {
+                                        printf("The %dth largest element is: %d\n", k, kthLargest);
+                                    } else {
+                                        printf("Invalid K value or K is out of range.\n");
+                                    }
+                                    break;
+                                case 3:
+                                    exit(0);
+                                default:
+                                    printf("Invalid choice. Please try again.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Binary Search Tree Operations:
+                1. Insert
+                2. Find Kth Largest Element
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert: 32
+                Binary Search Tree Operations:
+                1. Insert
+                2. Find Kth Largest Element
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert: 45
+                Binary Search Tree Operations:
+                1. Insert
+                2. Find Kth Largest Element
+                3. Exit
+                Enter your choice: 2
+                the value of k is: 45
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>13. FIND KTH SMALLEST ELEMENT IN A BINARY SEARCH TREE THROUGH ARRAY</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure for a BST node
+                    struct Node {
+                        int key;
+                        struct Node* left;
+                        struct Node* right;
+                    };
+                    
+                    // Function to create a new BST node
+                    struct Node* createNode(int key) {
+                        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                        newNode->key = key;
+                        newNode->left = newNode->right = NULL;
+                        return newNode;
+                    }
+                    
+                    // Function to insert a key into the BST
+                    struct Node* insert(struct Node* root, int key) {
+                        if (root == NULL) {
+                            return createNode(key);
+                        }
+                    
+                        if (key < root->key) {
+                            root->left = insert(root->left, key);
+                        } else if (key > root->key) {
+                            root->right = insert(root->right, key);
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // In-order traversal of the BST to collect values in an array
+                    void inOrderTraversal(struct Node* root, int arr[], int* index) {
+                        if (root == NULL) {
+                            return;
+                        }
+                    
+                        inOrderTraversal(root->left, arr, index);
+                        arr[*index] = root->key;
+                        (*index)++;
+                        inOrderTraversal(root->right, arr, index);
+                    }
+                    
+                    // Function to find the Kth smallest element in the BST through the array
+                    int findKthSmallest(struct Node* root, int k) {
+                        int nodeCount = 0;
+                        inOrderTraversal(root, NULL, &nodeCount);
+                    
+                        if (k <= 0 || k > nodeCount) {
+                            return -1; // Invalid K value
+                        }
+                    
+                        int* values = (int*)malloc(nodeCount * sizeof(int));
+                        int index = 0;
+                        inOrderTraversal(root, values, &index);
+                    
+                        // The Kth smallest element is at index k - 1
+                        int kthSmallest = values[k - 1];
+                    
+                        free(values); // Free the memory allocated for the array
+                        return kthSmallest;
+                    }
+                    
+                    int main() {
+                        struct Node* root = NULL;
+                        int choice, key;
+                    
+                        while (1) {
+                            printf("Binary Search Tree Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Find Kth Smallest Element\n");
+                            printf("3. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter the key to insert: ");
+                                    scanf("%d", &key);
+                                    root = insert(root, key);
+                                    break;
+                                case 2:
+                                    printf("Enter the value of K: ");
+                                    int k;
+                                    scanf("%d", &k);
+                                    int kthSmallest = findKthSmallest(root, k);
+                                    if (kthSmallest != -1) {
+                                        printf("The %dth smallest element is: %d\n", k, kthSmallest);
+                                    } else {
+                                        printf("Invalid K value or K is out of range.\n");
+                                    }
+                                    break;
+                                case 3:
+                                    exit(0);
+                                default:
+                                    printf("Invalid choice. Please try again.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Binary Search Tree Operations:
+                1. Insert
+                2. Find Kth Smallest Element
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert: 52
+                Binary Search Tree Operations:
+                1. Insert
+                2. Find Kth Smallest Element
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert: 94
+                Binary Search Tree Operations:
+                1. Insert
+                2. Find Kth Smallest Element
+                3. Exit
+                Enter your choice: 2
+                the value of K: 52
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>14. PRINT PREORDER TRAVERSAL TO POSTORDER TRAVERSAL OF BINARY SEARCH TREE</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure for a BST node
+                    struct Node {
+                        int key;
+                        struct Node* left;
+                        struct Node* right;
+                    };
+                    
+                    // Function to create a new BST node
+                    struct Node* createNode(int key) {
+                        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                        newNode->key = key;
+                        newNode->left = newNode->right = NULL;
+                        return newNode;
+                    }
+                    
+                    // Function to insert a key into the BST
+                    struct Node* insert(struct Node* root, int key) {
+                        if (root == NULL) {
+                            return createNode(key);
+                        }
+                    
+                        if (key < root->key) {
+                            root->left = insert(root->left, key);
+                        } else if (key > root->key) {
+                            root->right = insert(root->right, key);
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to perform Postorder traversal of the BST and print the values
+                    void postorderTraversal(struct Node* root) {
+                        if (root == NULL) {
+                            return;
+                        }
+                    
+                        postorderTraversal(root->left);
+                        postorderTraversal(root->right);
+                        printf("%d ", root->key);
+                    }
+                    
+                    int main() {
+                        struct Node* root = NULL;
+                        int choice, key;
+                    
+                        while (1) {
+                            printf("Binary Search Tree Operations:\n");
+                            printf("1. Insert (Preorder Traversal)\n");
+                            printf("2. Print Postorder Traversal\n");
+                            printf("3. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter the key to insert (Preorder Traversal): ");
+                                    scanf("%d", &key);
+                                    root = insert(root, key);
+                                    break;
+                                case 2:
+                                    printf("Postorder Traversal: ");
+                                    postorderTraversal(root);
+                                    printf("\n");
+                                    break;
+                                case 3:
+                                    exit(0);
+                                default:
+                                    printf("Invalid choice. Please try again.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Binary Search Tree Operations:
+                1. Insert (Preorder Traversal)
+                2. Print Postorder Traversal
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert (Preorder Traversal): 5
+                
+                Binary Search Tree Operations:
+                1. Insert (Preorder Traversal)
+                2. Print Postorder Traversal
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert (Preorder Traversal): 3
+                
+                Binary Search Tree Operations:
+                1. Insert (Preorder Traversal)
+                2. Print Postorder Traversal
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert (Preorder Traversal): 7
+                
+                Binary Search Tree Operations:
+                1. Insert (Preorder Traversal)
+                2. Print Postorder Traversal
+                3. Exit
+                Enter your choice: 2
+                Postorder Traversal: 3 7 5 
+                
+                Binary Search Tree Operations:
+                1. Insert (Preorder Traversal)
+                2. Print Postorder Traversal
+                3. Exit
+                Enter your choice: 3
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>15. CONSTRUCT BINARY SEARCH TREE FROM GIVEN PREORDER TRAVERSAL THROUGH ARRAYS</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure for a BST node
+                    struct Node {
+                        int key;
+                        struct Node* left;
+                        struct Node* right;
+                    };
+                    
+                    // Function to create a new BST node
+                    struct Node* createNode(int key) {
+                        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                        newNode->key = key;
+                        newNode->left = newNode->right = NULL;
+                        return newNode;
+                    }
+                    
+                    // Function to insert a key into the BST
+                    struct Node* insert(struct Node* root, int key) {
+                        if (root == NULL) {
+                            return createNode(key);
+                        }
+                    
+                        if (key < root->key) {
+                            root->left = insert(root->left, key);
+                        } else if (key > root->key) {
+                            root->right = insert(root->right, key);
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to construct a BST from Preorder Traversal array
+                    struct Node* constructBSTFromPreorder(int preOrder[], int size) {
+                        struct Node* root = NULL;
+                        for (int i = 0; i < size; i++) {
+                            root = insert(root, preOrder[i]);
+                        }
+                        return root;
+                    }
+                    
+                    // Function to perform In-order traversal of the BST
+                    void inorderTraversal(struct Node* root) {
+                        if (root == NULL) {
+                            return;
+                        }
+                        inorderTraversal(root->left);
+                        printf("%d ", root->key);
+                        inorderTraversal(root->right);
+                    }
+                    
+                    int main() {
+                        int preOrder[] = {10, 5, 1, 7, 40, 50};
+                        int size = sizeof(preOrder) / sizeof(preOrder[0]);
+                    
+                        struct Node* root = constructBSTFromPreorder(preOrder, size);
+                    
+                        printf("In-order Traversal of Constructed BST: ");
+                        inorderTraversal(root);
+                        printf("\n");
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                In-order Traversal of Constructed BST: 1 5 7 10 40 50 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>16. CONSTRUCT BINARY SEARCH TREE FROM GIVEN POSTORDER TRAVERSAL THROUGH ARRAYS</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure for a BST node
+                    struct Node {
+                        int key;
+                        struct Node* left;
+                        struct Node* right;
+                    };
+                    
+                    // Function to create a new BST node
+                    struct Node* createNode(int key) {
+                        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                        newNode->key = key;
+                        newNode->left = newNode->right = NULL;
+                        return newNode;
+                    }
+                    
+                    // Function to insert a key into the BST
+                    struct Node* insert(struct Node* root, int key) {
+                        if (root == NULL) {
+                            return createNode(key);
+                        }
+                    
+                        if (key < root->key) {
+                            root->left = insert(root->left, key);
+                        } else if (key > root->key) {
+                            root->right = insert(root->right, key);
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to construct a BST from Postorder Traversal array
+                    struct Node* constructBSTFromPostorder(int postOrder[], int size) {
+                        struct Node* root = NULL;
+                        for (int i = size - 1; i >= 0; i--) {
+                            root = insert(root, postOrder[i]);
+                        }
+                        return root;
+                    }
+                    
+                    // Function to perform In-order traversal of the BST
+                    void inorderTraversal(struct Node* root) {
+                        if (root == NULL) {
+                            return;
+                        }
+                        inorderTraversal(root->left);
+                        printf("%d ", root->key);
+                        inorderTraversal(root->right);
+                    }
+                    
+                    int main() {
+                        int postOrder[] = {1, 7, 8, 55, 40, 10};
+                        int size = sizeof(postOrder) / sizeof(postOrder[0]);
+                    
+                        struct Node* root = constructBSTFromPostorder(postOrder, size);
+                    
+                        printf("In-order Traversal of Constructed BST: ");
+                        inorderTraversal(root);
+                        printf("\n");
+                    
+                        return 0;
+                    }
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                In-order Traversal of Constructed BST: 1 7 8 10 40 55 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>17. CREATE STRICTLY BINARY TREE FROM THE GIVEN INPUT BY THE USER (DYNAMICALLY)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure for a node in a strictly binary tree
+                    struct Node {
+                        int data;
+                        struct Node* left;
+                        struct Node* right;
+                    };
+                    
+                    // Function to create a new node
+                    struct Node* createNode(int data) {
+                        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                        newNode->data = data;
+                        newNode->left = newNode->right = NULL;
+                        return newNode;
+                    }
+                    
+                    // Function to insert a new node into the strictly binary tree
+                    struct Node* insertNode(struct Node* root, int data) {
+                        if (root == NULL) {
+                            return createNode(data);
+                        }
+                    
+                        // Prompt the user to choose the left or right child
+                        printf("Enter 'L' to insert %d as the left child of %d or 'R' for the right child: ", data, root->data);
+                        char choice;
+                        scanf(" %c", &choice);
+                    
+                        if (choice == 'L' || choice == 'l') {
+                            root->left = insertNode(root->left, data);
+                        } else if (choice == 'R' || choice == 'r') {
+                            root->right = insertNode(root->right, data);
+                        } else {
+                            printf("Invalid choice. Please enter 'L' or 'R'.\n");
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to perform an in-order traversal of the strictly binary tree
+                    void inorderTraversal(struct Node* root) {
+                        if (root == NULL) {
+                            return;
+                        }
+                        inorderTraversal(root->left);
+                        printf("%d ", root->data);
+                        inorderTraversal(root->right);
+                    }
+                    
+                    int main() {
+                        struct Node* root = NULL;
+                        int data;
+                        char addMore;
+                    
+                        do {
+                            printf("Enter the value for the new node: ");
+                            scanf("%d", &data);
+                            if (root == NULL) {
+                                root = createNode(data);
+                            } else {
+                                root = insertNode(root, data);
+                            }
+                    
+                            printf("Do you want to add more nodes? (y/n): ");
+                            scanf(" %c", &addMore);
+                        } while (addMore == 'y' || addMore == 'Y');
+                    
+                        printf("In-order Traversal of the Strictly Binary Tree: ");
+                        inorderTraversal(root);
+                        printf("\n");
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the value for the new node: 5
+                Do you want to add more nodes? (y/n): y
+                Enter the value for the new node: 7
+                Enter 'L' to insert 7 as the left child of 5 or 'R' for the right child: r
+                Do you want to add more nodes? (y/n): n
+                In-order Traversal of the Strictly Binary Tree: 5 7 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>18. CREATE ALMOST COMPLETE BINARY TREE FROM THE GIVEN INPUT BY THE USER (DYNAMICALLY)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure for a node in an almost complete binary tree
+                    struct Node {
+                        int data;
+                        struct Node* left;
+                        struct Node* right;
+                    };
+                    
+                    // Function to create a new node
+                    struct Node* createNode(int data) {
+                        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                        newNode->data = data;
+                        newNode->left = newNode->right = NULL;
+                        return newNode;
+                    }
+                    
+                    // Function to insert a new node into the almost complete binary tree
+                    struct Node* insertNode(struct Node* root, int data) {
+                        if (root == NULL) {
+                            return createNode(data);
+                        }
+                    
+                        // Prompt the user to insert nodes from left to right on the last level
+                        if (root->left == NULL) {
+                            root->left = insertNode(root->left, data);
+                        } else if (root->right == NULL) {
+                            root->right = insertNode(root->right, data);
+                        } else {
+                            // Move to the next level
+                            root->left = insertNode(root->left, data);
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to perform an in-order traversal of the almost complete binary tree
+                    void inorderTraversal(struct Node* root) {
+                        if (root == NULL) {
+                            return;
+                        }
+                        inorderTraversal(root->left);
+                        printf("%d ", root->data);
+                        inorderTraversal(root->right);
+                    }
+                    
+                    int main() {
+                        struct Node* root = NULL;
+                        int data;
+                        char addMore;
+                    
+                        do {
+                            printf("Enter the value for the new node: ");
+                            scanf("%d", &data);
+                            if (root == NULL) {
+                                root = createNode(data);
+                            } else {
+                                root = insertNode(root, data);
+                            }
+                    
+                            printf("Do you want to add more nodes? (y/n): ");
+                            scanf(" %c", &addMore);
+                        } while (addMore == 'y' || addMore == 'Y');
+                    
+                        printf("In-order Traversal of the Almost Complete Binary Tree: ");
+                        inorderTraversal(root);
+                        printf("\n");
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the value for the new node: 10
+                Do you want to add more nodes? (y/n): y
+                Enter the value for the new node: 20
+                Do you want to add more nodes? (y/n): y
+                Enter the value for the new node: 30
+                Do you want to add more nodes? (y/n): y
+                Enter the value for the new node: 40
+                Do you want to add more nodes? (y/n): n
+                In-order Traversal of the Almost Complete Binary Tree: 10 20 30 40
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>19. CREATE COMPLETE BINARY TREE FROM THE GIVEN INPUT BY THE USER (DYNAMICALLY)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure for a node in a complete binary tree
+                    struct Node {
+                        int data;
+                        struct Node* left;
+                        struct Node* right;
+                    };
+                    
+                    // Function to create a new node
+                    struct Node* createNode(int data) {
+                        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                        newNode->data = data;
+                        newNode->left = newNode->right = NULL;
+                        return newNode;
+                    }
+                    
+                    // Function to insert a new node into the complete binary tree
+                    struct Node* insertNode(struct Node* root, int data) {
+                        if (root == NULL) {
+                            return createNode(data);
+                        }
+                    
+                        // Prompt the user to insert nodes from left to right
+                        if (root->left == NULL) {
+                            root->left = insertNode(root->left, data);
+                        } else if (root->right == NULL) {
+                            root->right = insertNode(root->right, data);
+                        } else {
+                            // If both left and right children are filled, move to the next level
+                            root->left = insertNode(root->left, data);
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to perform an in-order traversal of the complete binary tree
+                    void inorderTraversal(struct Node* root) {
+                        if (root == NULL) {
+                            return;
+                        }
+                        inorderTraversal(root->left);
+                        printf("%d ", root->data);
+                        inorderTraversal(root->right);
+                    }
+                    
+                    int main() {
+                        struct Node* root = NULL;
+                        int data;
+                        char addMore;
+                    
+                        do {
+                            printf("Enter the value for the new node: ");
+                            scanf("%d", &data);
+                            if (root == NULL) {
+                                root = createNode(data);
+                            } else {
+                                root = insertNode(root, data);
+                            }
+                    
+                            printf("Do you want to add more nodes? (y/n): ");
+                            scanf(" %c", &addMore);
+                        } while (addMore == 'y' || addMore == 'Y');
+                    
+                        printf("In-order Traversal of the Complete Binary Tree: ");
+                        inorderTraversal(root);
+                        printf("\n");
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the value for the new node: 10
+                Do you want to add more nodes? (y/n): y
+                Enter the value for the new node: 20
+                Do you want to add more nodes? (y/n): y
+                Enter the value for the new node: 30
+                Do you want to add more nodes? (y/n): y
+                Enter the value for the new node: 40
+                Do you want to add more nodes? (y/n): n
+                In-order Traversal of the Complete Binary Tree: 10 20 30 40
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>20. COUNT THE NUMBER OF NODES IN BINARY SEARCH TREE CONSTRUCTED DYNAMICALLY</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure for a BST node
+                    struct Node {
+                        int key;
+                        struct Node* left;
+                        struct Node* right;
+                    };
+                    
+                    // Function to create a new BST node
+                    struct Node* createNode(int key) {
+                        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                        newNode->key = key;
+                        newNode->left = newNode->right = NULL;
+                        return newNode;
+                    }
+                    
+                    // Function to insert a key into the BST
+                    struct Node* insert(struct Node* root, int key) {
+                        if (root == NULL) {
+                            return createNode(key);
+                        }
+                    
+                        if (key < root->key) {
+                            root->left = insert(root->left, key);
+                        } else if (key > root->key) {
+                            root->right = insert(root->right, key);
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to count the number of nodes in the BST
+                    int countNodes(struct Node* root) {
+                        if (root == NULL) {
+                            return 0;
+                        }
+                    
+                        // Recursively count nodes in left and right subtrees
+                        return 1 + countNodes(root->left) + countNodes(root->right);
+                    }
+                    
+                    int main() {
+                        struct Node* root = NULL;
+                        int choice, key;
+                    
+                        while (1) {
+                            printf("Binary Search Tree Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Count Nodes\n");
+                            printf("3. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter the key to insert: ");
+                                    scanf("%d", &key);
+                                    root = insert(root, key);
+                                    break;
+                                case 2:
+                                    int nodeCount = countNodes(root);
+                                    printf("Number of nodes in the BST: %d\n", nodeCount);
+                                    break;
+                                case 3:
+                                    exit(0);
+                                default:
+                                    printf("Invalid choice. Please try again.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }              
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Binary Search Tree Operations:
+                1. Insert
+                2. Count Nodes
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert: 10
+                Binary Search Tree Operations:
+                1. Insert
+                2. Count Nodes
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert: 5
+                Binary Search Tree Operations:
+                1. Insert
+                2. Count Nodes
+                3. Exit
+                Enter your choice: 1
+                Enter the key to insert: 15
+                Binary Search Tree Operations:
+                1. Insert
+                2. Count Nodes
+                3. Exit
+                Enter your choice: 2
+                Number of nodes in the BST: 3
+                Binary Search Tree Operations:
+                1. Insert
+                2. Count Nodes
+                3. Exit
+                Enter your choice: 
+            </code></pre>
+        </section>
+        </div>
+    </body>
+</html>

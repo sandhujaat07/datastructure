@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        /* Add CSS styles for code formatting and page layout */
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="content">
+        <h1>STRING</h1>
+        <section id="">
+            <h2>1. Convert Uppercase to Lowercase</h2>
+            <pre><code>
+                #include 
+                    
+                void convertToLowerCase(char *str) {
+                    for (int i = 0; str[i]; i++) {
+                        if (isupper(str[i])) {
+                            str[i] = tolower(str[i]);
+                        }
+                    }
+                }
+                
+                int main() {
+                    char input[100];
+                
+                    printf("Enter a string: ");
+                    fgets(input, sizeof(input), stdin);
+                
+                    convertToLowerCase(input);
+                
+                    printf("String in lowercase: %s\n", input);
+                
+                    return 0;
+                }
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: KHUSHBOO
+                String in lowercase:khushboo 
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>2. Convert Lowercase to Uppercase
+            </h2>
+            <pre><code>
+                #include 
+                    
+                void convertToUppercase(char *str) {
+                    for (int i = 0; str[i]; i++) {
+                        if (islower(str[i])) {
+                            str[i] = toupper(str[i]);
+                        }
+                    }
+                }
+                
+                int main() {
+                    char input[100];
+                
+                    printf("Enter a string: ");
+                    fgets(input, sizeof(input), stdin);
+                
+                    convertToUppercase(input);
+                
+                    printf("String in uppercase: %s\n", input);
+                
+                    return 0;
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: hello
+                String in uppercase: HELLO
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>3. Convert into sentence case</h2>
+            <pre><code>
+                #include 
+                    
+                void convertToSentenceCase(char *str) {
+                    int i;
+                    int capitalize = 1; // Capitalize the first letter of the sentence
+                
+                    for (i = 0; str[i]; i++) {
+                        if (isalpha(str[i])) {
+                            if (capitalize) {
+                                str[i] = toupper(str[i]);
+                                capitalize = 0;
+                            } else {
+                                str[i] = tolower(str[i]);
+                            }
+                        } else if (str[i] == '.' || str[i] == '!' || str[i] == '?') {
+                            capitalize = 1; // Capitalize the next letter
+                        }
+                    }
+                }
+                
+                int main() {
+                    char input[100];
+                
+                    printf("Enter a string: ");
+                    fgets(input, sizeof(input), stdin);
+                
+                    convertToSentenceCase(input);
+                
+                    printf("String in sentence case: %s\n", input);
+                
+                    return 0;
+                }
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: this is a sentance. the code will capitalize the first alphabet.
+                String in sentence case: This is a sentence. The code will capitalize the first alphabet.
+            
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>4. Convert into Title Case ?</h2>
+            <pre><code>
+                #include 
+                    
+                void convertToTitleCase(char *str) {
+                    int i;
+                    int newWord = 1;
+                
+                    for (i = 0; str[i]; i++) {
+                        if (isalpha(str[i])) {
+                            if (newWord) {
+                                str[i] = toupper(str[i]);
+                                newWord = 0;
+                            } else {
+                                str[i] = tolower(str[i]);
+                            }
+                        } else {
+                            
+                            newWord = 1;
+                        }
+                    }
+                }
+                
+                int main() {
+                    char input[100];
+                
+                    printf("Enter a string: ");
+                    fgets(input, sizeof(input), stdin);
+                
+                    convertToTitleCase(input);
+                
+                    printf("String in title case: %s\n", input);
+                
+                    return 0;
+                }
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: this is a sentence.
+                String in title case: This Is A Sentence.
+                
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>5. Enter the String From User and Convert into Toggle Case
+            </h2>
+            <pre><code>
+                #include 
+                    
+                void convertToToggleCase(char *str) {
+                    for (int i = 0; str[i]; i++) {
+                        if (isalpha(str[i])) {
+                            if (isupper(str[i])) {
+                                str[i] = tolower(str[i]); 
+                            } else {
+                                str[i] = toupper(str[i]); 
+                            }
+                        }
+                    }
+                }
+                
+                int main() {
+                    char input[100];
+                
+                    printf("Enter a string: ");
+                    fgets(input, sizeof(input), stdin);
+                
+                    convertToToggleCase(input);
+                
+                    printf("String in toggle case: %s\n", input);
+                
+                    return 0;
+                }
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: This is a ToGgLe CaSe.
+
+                String in toggle case: tHIS IS A tOgGlE cAsE.
+            
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>6. Enter the String From User and Final Length of the String</h2>
+            <pre><code>
+                #include 
+
+                int calculateStringLength(const char *str) {
+                    int length = 0;
+                    while (str[length] != '\0') {
+                        length++;
+                    }
+                    return length;
+                }
+                
+                int main() {
+                    char input[100];
+                    
+                    printf("Enter a string: ");
+                    fgets(input, sizeof(input), stdin);
+                
+                    
+                    if (input[0] != '\0' && input[strlen(input) - 1] == '\n') {
+                        input[strlen(input) - 1] = '\0';
+                    }
+                    
+                    int length = calculateStringLength(input);
+                    
+                    printf("Input String: %s\n", input);
+                    printf("Final Length of the String: %d\n", length);
+                    
+                    return 0;
+                }
+                
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: good
+                Input String: good
+                Final Length of the String: 4
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>7. Enter Two Strings From User and Compare Those Strings That They Are Equal or Not?</h2>
+            <pre><code>
+                #include 
+                    
+                bool areStringsEqual(const char *str1, const char *str2) {
+                    int i = 0;
+                
+                    while (str1[i] != '\0' || str2[i] != '\0') {
+                        if (str1[i] != str2[i]) {
+                            return false;
+                        }
+                        i++;
+                    }
+                
+                    return (str1[i] == '\0' && str2[i] == '\0');
+                }
+                
+                int main() {
+                    char string1[100];
+                    char string2[100];
+                
+                    printf("Enter the first string: ");
+                    fgets(string1, sizeof(string1), stdin);
+                
+                    printf("Enter the second string: ");
+                    fgets(string2, sizeof(string2), stdin);
+                
+                    
+                    if (string1[0] != '\0' && string1[strlen(string1) - 1] == '\n') {
+                        string1[strlen(string1) - 1] = '\0';
+                    }
+                    if (string2[0] != '\0' && string2[strlen(string2) - 1] == '\n') {
+                        string2[strlen(string2) - 1] = '\0';
+                    }
+                
+                    if (areStringsEqual(string1, string2)) {
+                        printf("The two strings are equal.\n");
+                    } else {
+                        printf("The two strings are not equal.\n");
+                    }
+                
+                    return 0;
+                }
+                
+        
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the first string: khushboo
+                Enter the second string: sandhu
+                The two strings are not equal.
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>8. Enter Two Strings From User And Concatenate Those Strings
+                 In Another String And Display The Answer</h2>
+            <pre><code>
+                #include 
+
+                int main() {
+                    char string1[100];
+                    char string2[100];
+                    char result[200]; 
+                    int i = 0, j = 0;
+                
+                    printf("Enter the first string: ");
+                    while (1) {
+                        char c = getchar();
+                        if (c == '\n' || i >= sizeof(string1) - 1) {
+                            break;
+                        }
+                        string1[i++] = c;
+                    }
+                    string1[i] = '\0';
+                
+                    printf("Enter the second string: ");
+                    while (1) {
+                        char c = getchar();
+                        if (c == '\n' || j >= sizeof(string2) - 1) {
+                            break;
+                        }
+                        string2[j++] = c;
+                    }
+                    string2[j] = '\0';
+                
+                    // Concatenate the two strings
+                    i = j = 0;
+                    while (string1[i] != '\0') {
+                        result[i] = string1[i];
+                        i++;
+                    }
+                    while (string2[j] != '\0') {
+                        result[i + j] = string2[j];
+                        j++;
+                    }
+                    result[i + j] = '\0';
+                
+                    printf("Concatenated string: %s\n", result);
+                
+                    return 0;
+                }
+                
+        
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the first string: khushboo
+                Enter the second string: Sandhu
+                Concatenated string: khushboosandhu
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>9. Enter the String From User and Copy It Into Another String Variable
+            </h2>
+            <pre><code>
+                #include 
+
+                void myGetString(char *str, int maxLen) {
+                    int i = 0;
+                    char c;
+                
+                    while (i < maxLen - 1) {
+                        c = getchar();
+                        if (c == '\n') {
+                            break;
+                        }
+                        str[i] = c;
+                        i++;
+                    }
+                
+                    str[i] = '\0';
+                    while (c != '\n' && c != EOF) {
+                        c = getchar(); // Clear the input buffer
+                    }
+                }
+                
+                void mergeStrings(char *dest, const char *str1, const char *str2) {
+                    int i = 0;
+                
+                    
+                    while (str1[i] != '\0') {
+                        dest[i] = str1[i];
+                        i++;
+                    }
+                
+                   
+                    int j = 0;
+                    while (str2[j] != '\0') {
+                        dest[i] = str2[j];
+                        i++;
+                        j++;
+                    }
+                
+                    dest[i] = '\0'; 
+                }
+                
+                int main() {
+                    char input1[100];
+                    char input2[100];
+                
+                    printf("Enter the first string: ");
+                    myGetString(input1, sizeof(input1));
+                
+                    printf("Enter the second string: ");
+                    myGetString(input2, sizeof(input2));
+                
+                    char mergedString[200]; 
+                
+                    mergeStrings(mergedString, input1, input2);
+                
+                    printf("Merged String: %s\n", mergedString);
+                
+                    return 0;
+                }
+
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the first string: hello
+                Enter the second string: world
+                Merged String: helloworld
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>10. Enter the String From User, Enter the Index Number
+                 and Print Character Present on That Index ?</h2>
+            <pre><code>
+                #include 
+
+                void myGetString(char *str, int maxLen) {
+                    int i = 0;
+                    char c;
+                
+                    while (i < maxLen - 1) {
+                        c = getchar();
+                        if (c == '\n') {
+                            break;
+                        }
+                        str[i] = c;
+                        i++;
+                    }
+                
+                    str[i] = '\0'; 
+                    while (c != '\n' && c != EOF) {
+                        c = getchar(); // Clear the input buffer
+                    }
+                }
+                
+                char getCharAtIndex(const char *str, int index) {
+                    if (index >= 0 && index < strlen(str)) {
+                        return str[index];
+                    } else {
+                        return '\0'; 
+                    }
+                }
+                
+                int main() {
+                    char input[100];
+                    int index;
+                
+                    printf("Enter a string: ");
+                    myGetString(input, sizeof(input));
+                
+                    printf("Enter the index number: ");
+                    scanf("%d", &index);
+                
+                    char result = getCharAtIndex(input, index);
+                
+                    if (result != '\0') {
+                        printf("Character at index %d: %c\n", index, result);
+                    } else {
+                        printf("Index is out of bounds.\n");
+                    }
+                
+                    return 0;
+                }
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: I am khushboo.
+                Enter the index number: 3
+                Character at index 3: a
+            
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>11. Enter the String From User and Check Its Palindrome or Not
+            </h2>
+            <pre><code>
+                #include 
+                    
+                int isPalindrome(const char *str, int length) {
+                    int i = 0;
+                    int j = length - 1;
+                
+                    while (i < j) {
+                        // Skip non-alphanumeric characters from the beginning
+                        while (i < j && !isalnum(str[i])) {
+                            i++;
+                        }
+                        // Skip non-alphanumeric characters from the end
+                        while (i < j && !isalnum(str[j])) {
+                            j--;
+                        }
+                
+                        if (tolower(str[i]) != tolower(str[j])) {
+                            return 0;
+                        }
+                        i++;
+                        j--;
+                    }
+                    return 1; 
+                }
+                
+                int main() {
+                    char input[100];
+                    int length = 0;
+                    char c;
+                
+                    printf("Enter a string: ");
+                    
+                    while (1) {
+                        c = getchar();
+                        if (c == '\n' || length >= sizeof(input) - 1) {
+                            break;
+                        }
+                        input[length] = c;
+                        length++;
+                    }
+                
+                    input[length] = '\0'; 
+                
+                    int result = isPalindrome(input, length);
+                
+                    if (result == 1) {
+                        printf("The entered string is a palindrome.\n");
+                    } else {
+                        printf("The entered string is not a palindrome.\n");
+                    }
+                
+                    return 0;
+                }
+                
+        
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: 738837
+                The entered string is a palindrome.
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>12. Enter the String From the User and Print Each Character in New Line</h2>
+            <pre><code>
+                #include 
+
+                void myGetString(char *str, int maxLen) {
+                    int i = 0;
+                    char c;
+                
+                    while (i < maxLen - 1) {
+                        c = getchar();
+                        if (c == '\n') {
+                            break;
+                        }
+                        str[i] = c;
+                        i++;
+                    }
+                
+                    str[i] = '\0'; 
+                    while (c != '\n' && c != EOF) {
+                        c = getchar(); 
+                    }
+                }
+                
+                void printCharactersInNewLines(const char *str) {
+                    int i = 0;
+                
+                    while (str[i] != '\0') {
+                        printf("%c\n", str[i]);
+                        i++;
+                    }
+                }
+                
+                int main() {
+                    char input[100];
+                
+                    printf("Enter a string: ");
+                    myGetString(input, sizeof(input));
+                
+                    printf("Characters in the string (one per line):\n");
+                    printCharactersInNewLines(input);
+                
+                    return 0;
+                }
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: bca
+                Characters in the string (one per line):
+                b 
+                c
+                a  
+              </code></pre>
+        </section>
+        <section id="">
+            <h2>13. Enter the String From the User and Copy Reverse of the String Into Another String</h2>
+            <pre><code>
+                #include 
+
+                void myGetString(char *str, int maxLen) {
+                    int i = 0;
+                    char c;
+                
+                    while (i < maxLen - 1) {
+                        c = getchar();
+                        if (c == '\n') {
+                            break;
+                        }
+                        str[i] = c;
+                        i++;
+                    }
+                
+                    str[i] = '\0'; 
+                    while (c != '\n' && c != EOF) {
+                        c = getchar(); 
+                    }
+                }
+                
+                void reverseString(const char *input, char *output) {
+                    int i = 0;
+                    int j = 0;
+                
+                    
+                    while (input[i] != '\0') {
+                        i++;
+                    }
+                
+                   
+                    for (j = 0; j < i; j++) {
+                        output[j] = input[i - 1 - j];
+                    }
+                    output[i] = '\0'; 
+                }
+                
+                int main() {
+                    char input[100];
+                    char reversed[100];
+                
+                    printf("Enter a string: ");
+                    myGetString(input, sizeof(input));
+                
+                    reverseString(input, reversed);
+                
+                    printf("Original String: %s\n", input);
+                    printf("Reversed String: %s\n", reversed);
+                
+                    return 0;
+                }
+                
+        
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: hello
+                Original String: hello
+                Reversed String: olleh
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>14. Enter the String From the User and Print the Difference of Ascii Value of Each Character</h2>
+            <pre><code>
+                #include 
+
+                void myGetString(char *str, int maxLen) {
+                    int i = 0;
+                    char c;
+                
+                    while (i < maxLen - 1) {
+                        c = getchar();
+                        if (c == '\n') {
+                            break;
+                        }
+                        str[i] = c;
+                        i++;
+                    }
+                
+                    str[i] = '\0';
+                    while (c != '\n' && c != EOF) {
+                        c = getchar(); 
+                    }
+                }
+                
+                void printDifferenceOfASCIIValues(const char *str) {
+                    int i = 0;
+                
+                    while (str[i] != '\0' && str[i + 1] != '\0') {
+                        int diff = str[i + 1] - str[i];
+                        printf("Difference between '%c' and '%c' is %d\n", str[i + 1], str[i], diff);
+                        i++;
+                    }
+                }
+                
+                int main() {
+                    char input[100];
+                
+                    printf("Enter a string: ");
+                    myGetString(input, sizeof(input));
+                
+                    printf("Differences in ASCII values:\n");
+                    printDifferenceOfASCIIValues(input);
+                
+                    return 0;
+                }
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: khushboo
+                Differences in ASCII values:
+                Difference between 'h' and 'k' is -3
+                Difference between 'u' and 'h' is 13
+                Difference between 's' and 'u' is -2
+                Difference between 'h' and 's' is -11
+                Difference between 'b' and 'h' is -6
+                Difference between 'o' and 'b' is 13
+                Difference between 'o' and 'o' is 0
+                
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>15. Enter the String From the User, Enter a Character Also and Search the Character in the String
+            </h2>
+            <pre><code>
+                #include 
+
+                void myGetString(char *str, int maxLen) {
+                    int i = 0;
+                    char c;
+                
+                    while (i < maxLen - 1) {
+                        c = getchar();
+                        if (c == '\n') {
+                            break;
+                        }
+                        str[i] = c;
+                        i++;
+                    }
+                
+                    str[i] = '\0'; 
+                    while (c != '\n' && c != EOF) {
+                        c = getchar(); 
+                    }
+                }
+                
+                int searchCharacter(const char *str, char target) {
+                    int i = 0;
+                
+                    while (str[i] != '\0') {
+                        if (str[i] == target) {
+                            return 1; // Character found
+                        }
+                        i++;
+                    }
+                
+                    return 0; 
+                }
+                
+                int main() {
+                    char input[100];
+                    char target;
+                
+                    printf("Enter a string: ");
+                    myGetString(input, sizeof(input));
+                
+                    printf("Enter a character to search for: ");
+                    target = getchar();
+                
+                    int result = searchCharacter(input, target);
+                
+                    if (result == 1) {
+                        printf("The character '%c' is found in the string.\n", target);
+                    } else {
+                        printf("The character '%c' is not found in the string.\n", target);
+                    }
+                
+                    return 0;
+                }
+                
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: Chandigarh
+                Enter a character to search for: s
+                The character 's' is not found in the string.
+                
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>16. Enter the String From the User,
+                 Also Enter a Character and Print the Index of the Character if it Exist in the String Else Print -1</h2>
+            <pre><code>
+                #include 
+
+                void myGetString(char *str, int maxLen) {
+                    int i = 0;
+                    char c;
+                
+                    while (i < maxLen - 1) {
+                        c = getchar();
+                        if (c == '\n') {
+                            break;
+                        }
+                        str[i] = c;
+                        i++;
+                    }
+                
+                    str[i] = '\0'; // Null-terminate the string
+                    while (c != '\n' && c != EOF) {
+                        c = getchar(); 
+                    }
+                }
+                
+                int findCharacterIndex(const char *str, char target) {
+                    int i = 0;
+                
+                    while (str[i] != '\0') {
+                        if (str[i] == target) {
+                            return i; 
+                        }
+                        i++;
+                    }
+                
+                    return -1; 
+                }
+                
+                int main() {
+                    char input[100];
+                    char target;
+                
+                    printf("Enter a string: ");
+                    myGetString(input, sizeof(input));
+                
+                    printf("Enter a character to search for: ");
+                    target = getchar();
+                
+                    int result = findCharacterIndex(input, target);
+                    
+                    printf(" %d\n", result);
+                
+                    return 0;
+                }
+                
+        
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: jatin
+                Enter a character to search for: a
+                1
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>17. Enter the String From the User, and Count the Number of Vowels</h2>
+            <pre><code>
+                #include 
+                    
+                void myGetString(char *str, int maxLen) {
+                    int i = 0;
+                    char c;
+                
+                    while (i < maxLen - 1) {
+                        c = getchar();
+                        if (c == '\n') {
+                            break;
+                        }
+                        str[i] = c;
+                        i++;
+                    }
+                
+                    str[i] = '\0'; 
+                    while (c != '\n' && c != EOF) {
+                        c = getchar();
+                    }
+                }
+                
+                int countVowels(const char *str) {
+                    int count = 0;
+                    for (int i = 0; str[i] != '\0'; i++) {
+                        char c = tolower(str[i]); 
+                        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+                            count++; 
+                        }
+                    }
+                    return count;
+                }
+                
+                int main() {
+                    char input[100];
+                
+                    printf("Enter a string: ");
+                    myGetString(input, sizeof(input));
+                
+                    int vowelCount = countVowels(input);
+                
+                    printf("Number of vowels in the string: %d\n", vowelCount);
+                
+                    return 0;
+                }
+            
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: chandigarh
+                Number of vowels in the string: 3
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>18. Enter the String From the User and Convert Into an Integer Value</h2>
+            <pre><code>
+                #include 
+                    
+                void myGetString(char *str, int maxLen) {
+                    int i = 0;
+                    char c;
+                
+                    while (i < maxLen - 1) {
+                        c = getchar();
+                        if (c == '\n') {
+                            break;
+                        }
+                        str[i] = c;
+                        i++;
+                    }
+                
+                    str[i] = '\0'; 
+                    while (c != '\n' && c != EOF) {
+                        c = getchar(); 
+                    }
+                }
+                
+                int main() {
+                    char input[100];
+                
+                    printf("Enter a string representing an integer: ");
+                    myGetString(input, sizeof(input));
+                
+                    int integerValue = atoi(input);
+                
+                    printf("Integer value: %d\n", integerValue);
+                
+                    return 0;
+                }
+                
+        
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string representing an integer: 22346
+                Integer value: 22346
+            
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>19. Enter the String From the User and Convert Into a Float Value
+            </h2>
+            <pre><code>
+                #include 
+                    
+                void myGetString(char *str, int maxLen) {
+                    int i = 0;
+                    char c;
+                
+                    while (i < maxLen - 1) {
+                        c = getchar();
+                        if (c == '\n') {
+                            break;
+                        }
+                        str[i] = c;
+                        i++;
+                    }
+                
+                    str[i] = '\0'; 
+                    while (c != '\n' && c != EOF) {
+                        c = getchar(); 
+                    }
+                }
+                
+                int main() {
+                    char input[100];
+                
+                    printf("Enter a string representing a float: ");
+                    myGetString(input, sizeof(input));
+                
+                    float floatValue = atof(input);
+                
+                    printf("Float value: %f\n", floatValue);
+                
+                    return 0;
+                }
+                
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string representing a float: 2.09
+                Float value: 2.090000
+            
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>20. Enter the String From the User and Count the Number of Characters, Words, Spaces and Lines
+            </h2>
+            <pre><code>
+                #include 
+                    
+                void myGetString(char *str, int maxLen) {
+                    int i = 0;
+                    char c;
+                
+                    while (i < maxLen - 1) {
+                        c = getchar();
+                        if (c == '\n') {
+                            break;
+                        }
+                        str[i] = c;
+                        i++;
+                    }
+                
+                    str[i] = '\0';
+                    while (c != '\n' && c != EOF) {
+                        c = getchar();
+                    }
+                }
+                
+                int main() {
+                    char input[1000];
+                
+                    printf("Enter a string (Press Enter to finish input):\n");
+                    myGetString(input, sizeof(input));
+                
+                    int characterCount = 0;
+                    int wordCount = 0;
+                    int spaceCount = 0;
+                    int lineCount = 1;
+                
+                    for (int i = 0; input[i] != '\0'; i++) {
+                        characterCount++;
+                
+                        if (isspace(input[i])) {
+                            spaceCount++;
+                
+                            
+                            if (i > 0 && !isspace(input[i - 1])) {
+                                wordCount++;
+                            }
+                        }
+                
+                        if (input[i] == '\n') {
+                            lineCount++;
+                        }
+                    }
+                
+                   
+                    if (!isspace(input[characterCount - 1])) {
+                        wordCount++;
+                    }
+                
+                    printf("Character Count: %d\n", characterCount);
+                    printf("Word Count: %d\n", wordCount);
+                    printf("Space Count: %d\n", spaceCount);
+                    printf("Line Count: %d\n", lineCount);
+                
+                    return 0;
+                }
+                
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string (Press Enter to finish input):
+                this is mine.
+                Character Count: 13
+                Word Count: 3
+                Space Count: 2
+                Line Count: 1
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>21. Print All the Permutation of a String i.e. "ABCDE".
+            </h2>
+            <pre><code>
+                #include 
+                    
+                void generatePermutations(char *str, int index, int length) {
+                    if (index == length) {
+                        printf("%s\n", str);
+                        return;
+                    }
+                
+                    for (int i = index; i <= length; i++) {
+                        
+                        char temp = str[index];
+                        str[index] = str[i];
+                        str[i] = temp;
+                
+                        generatePermutations(str, index + 1, length);
+                
+                        
+                        temp = str[index];
+                        str[index] = str[i];
+                        str[i] = temp;
+                    }
+                }
+                
+                int main() {
+                    char str[] = "ABCDE";
+                    int length = strlen(str);
+                
+                    printf("Permutations of '%s':\n", str);
+                    generatePermutations(str, 0, length - 1);
+                
+                    return 0;
+                }
+                
+        
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Permutations of 'ABCDE':ABCDE
+                ABCED
+                ABDCE
+                ABDEC
+                ABEDC
+                ABECD
+                ACBDE
+                ACBED
+                ACDBE
+                ACDEB
+                ACEDB
+                ACEBD
+                ADCBE
+                ADCEB
+                ADBCE
+                ADBEC
+                ADEBC
+                ADECB
+                AECDB
+                AECBD
+                AEDCB
+                AEDBC
+                AEBDC
+                AEBCD
+                BACDE
+                BACED
+                BADCE
+                BADEC
+                BAEDC
+                BAECD
+                BCADE
+                BCAED
+                BCDAE
+                BCDEA
+                BCEDA
+                BCEAD
+                BDCAE
+                BDCEA
+                BDACE
+                BDAEC
+                BDEAC
+                BDECA
+                BECDA
+                BECAD
+                BEDCA
+                BEDAC
+                BEADC
+                BEACD
+                CBADE
+                CBAED
+                CBDAE
+                CBDEA
+                CBEDA
+                CBEAD
+                CABDE
+                CABED
+                CADBE
+                CADEB
+                CAEDB
+                CAEBD
+                CDABE
+                CDAEB
+                CDBAE
+                CDBEA
+                CDEBA
+                CDEAB
+                CEADB
+                CEABD
+                CEDAB
+                CEDBA
+                CEBDA
+                CEBAD
+                DBCAE
+                DBCEA
+                DBACE
+                DBAEC
+                DBEAC
+                DBECA
+                DCBAE
+                DCBEA
+                DCABE
+                DCAEB
+                DCEAB
+                DCEBA
+                DACBE
+                DACEB
+                DABCE
+                DABEC
+                DAEBC
+                DAECB
+                DECAB
+                DECBA
+                DEACB
+                DEABC
+                DEBAC
+                DEBCA
+                EBCDA
+                EBCAD
+                EBDCA
+                EBDAC
+                EBADC
+                EBACD
+                ECBDA
+                ECBAD
+                ECDBA
+                ECDAB
+                ECADB
+                ECABD
+                EDCBA
+                EDCAB
+                EDBCA
+                EDBAC
+                EDABC
+                EDACB
+                EACDB
+                EACBD
+                EADCB
+                EADBC
+                EABDC
+                EABCD
+         </code></pre>
+        </section>
+        <section id="">
+            <h2>22. Enter the String From the User, Sort the String in Ascending Order and Print It.
+            </h2>
+            <pre><code>
+                #include 
+                    
+                void myGetString(char *str, int maxLen) {
+                    int i = 0;
+                    char c;
+                
+                    while (i < maxLen - 1) {
+                        c = getchar();
+                        if (c == '\n') {
+                            break;
+                        }
+                        str[i] = c;
+                        i++;
+                    }
+                
+                    str[i] = '\0'; 
+                    while (c != '\n' && c != EOF) {
+                        c = getchar();
+                    }
+                }
+                
+                void bubbleSortString(char *str) {
+                    int length = strlen(str);
+                    int swapped;
+                
+                    do {
+                        swapped = 0;
+                
+                        for (int i = 0; i < length - 1; i++) {
+                            if (str[i] > str[i + 1]) {
+                                // Swap the characters
+                                char temp = str[i];
+                                str[i] = str[i + 1];
+                                str[i + 1] = temp;
+                                swapped = 1;
+                            }
+                        }
+                    } while (swapped);
+                }
+                
+                int main() {
+                    char input[1000];
+                
+                    printf("Enter a string: ");
+                    myGetString(input, sizeof(input));
+                
+                    bubbleSortString(input);
+                
+                    printf("Sorted string in ascending order: %s\n", input);
+                
+                    return 0;
+                }
+                
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+
+                Enter a string: 75482
+                Sorted string in ascending order: 24578
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>23. Enter a Sentence From User and Then Enter the Word and Count the Occurence of That Word in the Sentence
+            </h2>
+            <pre><code>
+                #include 
+                    
+                void myGetString(char *str, int maxLen) {
+                    int i = 0;
+                    char c;
+                
+                    while (i < maxLen - 1) {
+                        c = getchar();
+                        if (c == '\n') {
+                            break;
+                        }
+                        str[i] = c;
+                        i++;
+                    }
+                
+                    str[i] = '\0'; 
+                    while (c != '\n' && c != EOF) {
+                        c = getchar();
+                    }
+                }
+                
+                int countWordOccurrences(const char *sentence, const char *word) {
+                    int count = 0;
+                    int sentenceLength = strlen(sentence);
+                    int wordLength = strlen(word);
+                
+                    for (int i = 0; i <= sentenceLength - wordLength; i++) {
+                        if (strncmp(&sentence[i], word, wordLength) == 0) {
+                            count++;
+                            i += wordLength - 1; 
+                        }
+                    }
+                
+                    return count;
+                }
+                
+                int main() {
+                    char sentence[1000];
+                    char word[100];
+                
+                    printf("Enter a sentence: ");
+                    myGetString(sentence, sizeof(sentence));
+                
+                    printf("Enter the word to count: ");
+                    myGetString(word, sizeof(word));
+                
+                    int occurrences = countWordOccurrences(sentence, word);
+                
+                    printf("The word '%s' appears %d times in the sentence.\n", word, occurrences);
+                
+                    return 0;
+                }
+                
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a sentence: There was a cat in the park. It was a black colored cat.
+                Enter the word to count: cat
+                The word 'cat' appears 2 times in the sentence.
+                
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>24. Enter a Sentence From User and Then Enter the Word and Replace That Word by Another Word.
+            </h2>
+            <pre><code>
+                #include 
+                    
+                void myGetString(char *str, int maxLen) {
+                    int i = 0;
+                    char c;
+                
+                    while (i < maxLen - 1) {
+                        c = getchar();
+                        if (c == '\n') {
+                            break;
+                        }
+                        str[i] = c;
+                        i++;
+                    }
+                
+                    str[i] = '\0'; 
+                    while (c != '\n' && c != EOF) {
+                        c = getchar(); 
+                    }
+                }
+                
+                int main() {
+                    char sentence[1000];
+                    char searchWord[100];
+                    char replaceWord[100];
+                    char modifiedSentence[1000] = "";
+                    int sentenceLength, searchWordLength, replaceWordLength;
+                
+                    printf("Enter a sentence: ");
+                    myGetString(sentence, sizeof(sentence));
+                
+                    printf("Enter the word to replace: ");
+                    myGetString(searchWord, sizeof(searchWord));
+                
+                    printf("Enter the replacement word: ");
+                    myGetString(replaceWord, sizeof(replaceWord));
+                
+                    sentenceLength = strlen(sentence);
+                    searchWordLength = strlen(searchWord);
+                    replaceWordLength = strlen(replaceWord);
+                
+                    int i = 0;
+                    while (i < sentenceLength) {
+                        int match = 1;
+                        if (strncmp(&sentence[i], searchWord, searchWordLength) == 0) {
+                            strcat(modifiedSentence, replaceWord);
+                            i += searchWordLength;
+                        } else {
+                            strncat(modifiedSentence, &sentence[i], 1);
+                            i++;
+                        }
+                    }
+                
+                    printf("Modified sentence: %s\n", modifiedSentence);
+                
+                    return 0;
+                }
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a sentence: This is a sentence.
+                Enter the word to replace: sentence
+                Enter the replacement word: line
+                Modified sentence: This is a line.
+            
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>25. Enter the String From the User and Trim/ Eliminate the Spaces From Both Ends (if Any)
+            </h2>
+            <pre><code>
+                #include 
+                    
+                void myGetString(char *str, int maxLen) {
+                    int i = 0;
+                    char c;
+                
+                    while (i < maxLen - 1) {
+                        c = getchar();
+                        if (c == '\n') {
+                            break;
+                        }
+                        str[i] = c;
+                        i++;
+                    }
+                
+                    str[i] = '\0'; 
+                    while (c != '\n' && c != EOF) {
+                        c = getchar(); 
+                    }
+                }
+                
+                void trimSpaces(char *str) {
+                    int length = strlen(str);
+                    int start = 0;
+                    int end = length - 1;
+                
+                    // Trim spaces from the beginning
+                    while (start < length && str[start] == ' ') {
+                        start++;
+                    }
+                
+                    // Trim spaces from the end
+                    while (end >= 0 && str[end] == ' ') {
+                        end--;
+                    }
+                
+                    // Shift the non-space characters to the beginning of the string
+                    for (int i = start; i <= end; i++) {
+                        str[i - start] = str[i];
+                    }
+                
+                    // Null-terminate the trimmed string
+                    str[end - start + 1] = '\0';
+                }
+                
+                int main() {
+                    char inputString[1000];
+                
+                    printf("Enter a string: ");
+                    myGetString(inputString, sizeof(inputString));
+                
+                    trimSpaces(inputString);
+                
+                    printf("Trimmed string: %s\n", inputString);
+                
+                    return 0;
+                }
+                
+        
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: it is for loop
+                Trimmed string: it is for loop
+                
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>26. Enter the String From User 
+                and Splits the First Word and Second Word and Return the Start Index of the Second Word.</h2>
+            <pre><code>
+                #include 
+                    
+                void myGetString(char *str, int maxLen) {
+                    int i = 0;
+                    char c;
+                
+                    while (i < maxLen - 1) {
+                        c = getchar();
+                        if (c == '\n') {
+                            break;
+                        }
+                        str[i] = c;
+                        i++;
+                    }
+                
+                    str[i] = '\0'; 
+                    while (c != '\n' && c != EOF) {
+                        c = getchar(); 
+                    }
+                }
+                
+                int findSecondWordStartIndex(const char *str) {
+                    int startIndex = 0;
+                    int spaceCount = 0;
+                
+                    while (str[startIndex] != '\0') {
+                        if (str[startIndex] == ' ') {
+                            spaceCount++;
+                        }
+                
+                        if (spaceCount == 1) {
+                           
+                            break;
+                        }
+                
+                        startIndex++;
+                    }
+                
+                    return startIndex;
+                }
+                
+                int main() {
+                    char inputString[1000];
+                
+                    printf("Enter a string: ");
+                    myGetString(inputString, sizeof(inputString));
+                
+                    int secondWordStartIndex = findSecondWordStartIndex(inputString);
+                
+                    printf("Start index of the second word: %d\n", secondWordStartIndex);
+                
+                    return 0;
+                }
+                
+        
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: This is a string.
+                Start index of the second word: 4
+            
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>27. Display the String on the Output 
+                Screen but Ask the Text Alignment Option Given by the User 
+                (1 for Left, 2 for Center, 3 Right)</h2>
+            <pre><code>
+                
+                #include 
+                    #include 
+                    
+                    void myGetString(char *str, int maxLen) {
+                        int i = 0;
+                        char c;
+                    
+                        while (i < maxLen - 1) {
+                            c = getchar();
+                            if (c == '\n') {
+                                break;
+                            }
+                            str[i] = c;
+                            i++;
+                        }
+                    
+                        str[i] = '\0'; 
+                        while (c != '\n' && c != EOF) {
+                            c = getchar(); 
+                        }
+                    }
+                    
+                    void displayWithAlignment(const char *str, int alignment) {
+                        int length = strlen(str);
+                    
+                        if (alignment == 1) {
+                            printf("%s\n", str);
+                        } else if (alignment == 2) {
+                            int padding = (80 - length) / 2;
+                            printf("%*s%s%*s\n", padding, "", str, padding, ""); 
+                        } else if (alignment == 3) {
+                            int padding = 80 - length;
+                            printf("%*s%s\n", padding, "", str); // Right-aligned
+                        } else {
+                            printf("Invalid alignment option\n");
+                        }
+                    }
+                    
+                    int main() {
+                        char inputString[1000];
+                        int alignmentOption;
+                    
+                        printf("Enter a string: ");
+                        myGetString(inputString, sizeof(inputString));
+                    
+                        printf("Enter text alignment option (1 for Left, 2 for Center, 3 for Right): ");
+                        scanf("%d", &alignmentOption);
+                    
+                        if (alignmentOption < 1 || alignmentOption > 3) {
+                            printf("Invalid alignment option\n");
+                        } else {
+                            displayWithAlignment(inputString, alignmentOption);
+                        }
+                    
+                        return 0;
+                    }
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: The split() method is the most common way to split a string into a list in Python. This method splits a string into substrings based on a delimiter and returns a list of these substrings.
+                Enter text alignment option (1 for Left, 2 for Center, 3 for Right): 3
+                The split() method is the most common way to split a string into a list in Python. This method splits a string into substrings based on a delimiter and returns a list of these substrings.
+                
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>28. Create a Dictionary Having 10 Words and Their Meaning With Following Operations. [create, Delete, Search].
+            </h2>
+            <pre><code>
+                #include 
+                    
+                struct DictionaryEntry {
+                    char word[50];
+                    char meaning[100];
+                };
+                
+                void createEntry(struct DictionaryEntry dictionary[], int* count) {
+                    if (*count < 10) {
+                        printf("Enter the word: ");
+                        scanf("%s", dictionary[*count].word);
+                        printf("Enter the meaning: ");
+                        scanf(" %[^\n]", dictionary[*count].meaning);
+                        (*count)++;
+                        printf("Entry added to the dictionary.\n");
+                    } else {
+                        printf("Dictionary is full. Cannot add more entries.\n");
+                    }
+                }
+                
+                void deleteEntry(struct DictionaryEntry dictionary[], int* count, const char* word) {
+                    int index = -1;
+                
+                    for (int i = 0; i < *count; i++) {
+                        if (strcmp(dictionary[i].word, word) == 0) {
+                            index = i;
+                            break;
+                        }
+                    }
+                
+                    if (index != -1) {
+                        for (int i = index; i < *count - 1; i++) {
+                            strcpy(dictionary[i].word, dictionary[i + 1].word);
+                            strcpy(dictionary[i].meaning, dictionary[i + 1].meaning);
+                        }
+                        (*count)--;
+                        printf("Entry deleted from the dictionary.\n");
+                    } else {
+                        printf("Word not found in the dictionary.\n");
+                    }
+                }
+                
+                void searchEntry(const struct DictionaryEntry dictionary[], int count, const char* word) {
+                    for (int i = 0; i < count; i++) {
+                        if (strcmp(dictionary[i].word, word) == 0) {
+                            printf("Word: %s\nMeaning: %s\n", dictionary[i].word, dictionary[i].meaning);
+                            return;
+                        }
+                    }
+                    printf("Word not found in the dictionary.\n");
+                }
+                
+                int main() {
+                    struct DictionaryEntry dictionary[10];
+                    int count = 0;
+                    int choice;
+                    char word[50];
+                
+                    while (1) {
+                        printf("\nDictionary Operations:\n");
+                        printf("1. Create an entry\n");
+                        printf("2. Delete an entry\n");
+                        printf("3. Search for an entry\n");
+                        printf("4. Exit\n");
+                        printf("Enter your choice: ");
+                        scanf("%d", &choice);
+                
+                        switch (choice) {
+                            case 1:
+                                createEntry(dictionary, &count);
+                                break;
+                            case 2:
+                                printf("Enter the word to delete: ");
+                                scanf("%s", word);
+                                deleteEntry(dictionary, &count, word);
+                                break;
+                            case 3:
+                                printf("Enter the word to search: ");
+                                scanf("%s", word);
+                                searchEntry(dictionary, count, word);
+                                break;
+                            case 4:
+                                return 0;
+                            default:
+                                printf("Invalid choice. Please enter a valid option.\n");
+                        }
+                    }
+                
+                    return 0;
+                }
+                
+        
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Dictionary Operations:
+                1. Create an entry
+                2. Delete an entry
+                3. Search for an entry
+                4. Exit
+                Enter your choice: 1
+                Enter the word: Cat
+                Enter the meaning: An Animal
+                Entry added to the dictionary.
+                
+                Dictionary Operations:
+                1. Create an entry
+                2. Delete an entry
+                3. Search for an entry
+                4. Exit
+                Enter your choice: 1
+                Enter the word: Banana
+                Enter the meaning: A fruit
+                Entry added to the dictionary.
+                
+                Dictionary Operations:
+                1. Create an entry
+                2. Delete an entry
+                3. Search for an entry
+                4. Exit
+                Enter your choice: 3
+                Enter the word to search: Cat
+                Word: Cat
+                Meaning: An Animal
+                
+                Dictionary Operations:
+                1. Create an entry
+                2. Delete an entry
+                3. Search for an entry
+                4. Exit
+                Enter your choice: 4
+                
+            </code></pre>
+        </section>
+        <section id="">
+            <h2>29. Enter the String From User and Convert Characters Into Their Ascii Values in the Integer Array</h2>
+            <pre><code>
+                #include 
+
+                int main() {
+                    char inputString[100];
+                    int asciiValues[100];
+                    int i = 0;
+                
+                    printf("Enter a string: ");
+                    gets(inputString); 
+                
+                   
+                    for (i = 0; inputString[i] != '\0'; i++) {
+                        asciiValues[i] = (int)inputString[i];
+                    }
+                
+                    // Display the ASCII values
+                    printf("ASCII Values of Characters in the String:\n");
+                    for (int j = 0; j < i; j++) {
+                        printf("%c = %d\n", inputString[j], asciiValues[j]);
+                    }
+                
+                    return 0;
+                }
+                
+        
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter a string: bharat
+                ASCII Values of Characters in the String:b = 98
+                h = 104
+                a = 97
+                r = 114
+                a = 97
+                t = 116
+                
+            </code></pre>
+        </section>
+        </div>
+    </body>
+</html>
